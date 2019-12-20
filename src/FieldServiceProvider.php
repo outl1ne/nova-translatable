@@ -16,7 +16,6 @@ class FieldServiceProvider extends ServiceProvider
         });
 
         // Register macro
-        ddd('macro!?');
         Field::macro('translatable', function ($locales = []) {
             $this->withMeta([
                 'translatable' => [
