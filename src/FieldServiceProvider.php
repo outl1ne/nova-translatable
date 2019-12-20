@@ -17,14 +17,20 @@ class FieldServiceProvider extends ServiceProvider
 
         // Register macro
         Field::macro('translatable', function ($locales = []) {
-            $this->withMeta([
-                'translatable' => [
-                    'original_component' => $this->component,
-                    'locales' => $locales,
-                ],
-            ]);
+            $this->resolveUsing(function ($value, $resource, $attribute) use ($locales) {
+                $this->withMeta([
+                    'translatable' => [
+                        'original_component' => $this->component,
+                        'locales' => $locales,
+                        'value' => $resource->getTranslations($attribute)
+                    ],
+                ]);
 
-            $this->component = 'translatable-field';
+                $this->component = 'translatable-field';
+
+                return $this->resolveAttribute($resource, $attribute);
+            });
+            return $this;
         });
     }
 
