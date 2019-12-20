@@ -27,13 +27,13 @@
   },
   "autoload": {
     "psr-4": {
-      "OptimistDigital\\MultiselectField\\": "src/"
+      "OptimistDigital\\NovaTranslatable\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "OptimistDigital\\MultiselectField\\FieldServiceProvider"
+        "OptimistDigital\\NovaTranslatable\\FieldServiceProvider"
       ]
     }
   },
