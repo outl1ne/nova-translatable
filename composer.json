@@ -1,0 +1,51 @@
+{
+  "name": "optimistdigital/nova-translatable",
+  "description": "A laravel-translatable extension for Laravel Nova.",
+  "keywords": [
+    "laravel",
+    "nova",
+    "translatable",
+    "i18n",
+    "translate"
+  ],
+  "authors": [
+    {
+      "name": "Tarvo Reinpalu",
+      "email": "tarvoreinpalu@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Optimist Digital",
+      "email": "info@optimistdigital.com",
+      "role": "Maintainer"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.1.0",
+    "laravel/nova": "^2.9"
+  },
+  "autoload": {
+    "psr-4": {
+      "OptimistDigital\\MultiselectField\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OptimistDigital\\MultiselectField\\FieldServiceProvider"
+      ]
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ]
+}
