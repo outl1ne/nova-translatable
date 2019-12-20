@@ -6,12 +6,14 @@
       </a>
     </div>
 
-    <component
-      :is="'form-' + field.translatable.original_component"
-      :field="modifiedField"
-      :resource-name="resourceName"
-      ref="inputField"
-    ></component>
+    <div v-for="locale in locales" :key="locale.key">
+      <component
+        v-if="locale.key === activeLocale"
+        :is="'form-' + field.translatable.original_component"
+        :field="fakeField"
+        :resource-name="resourceName"
+      ></component>
+    </div>
   </div>
 </template>
 
@@ -25,12 +27,13 @@ export default {
     value: {},
     activeLocale: void 0,
     originalFieldName: void 0,
+    fakeField: void 0,
   }),
   mounted() {
     this.value = this.getInitialValue();
     this.originalFieldName = this.field.name;
     this.activeLocale = this.locales[0].key;
-    this.updateInputValue();
+    this.fakeField = { ...this.field };
   },
   computed: {
     locales() {
@@ -38,13 +41,6 @@ export default {
         key,
         name: this.field.translatable.locales[key],
       }));
-    },
-    modifiedField() {
-      return {
-        ...this.field,
-        name: `${this.originalFieldName} (${this.activeLocale})`,
-        value: this.value[this.activeLocale],
-      };
     },
   },
   methods: {
@@ -60,13 +56,9 @@ export default {
       return initialValue;
     },
 
-    updateInputValue() {
-      this.$nextTick(() => this.$refs.inputField.setInitialValue());
-    },
-
     copyValueFromCurrentLocale() {
       const formData = new FormData();
-      this.$refs.inputField.fill(formData);
+      this.fakeField.fill(formData);
       this.value[this.activeLocale] = formData.get(this.field.attribute);
     },
 
@@ -74,13 +66,11 @@ export default {
       // First read and copy the value from current input field
       this.copyValueFromCurrentLocale();
 
+      // Set field value
+      this.fakeField.value = this.value[newLocale];
+
       // Set new activeLocale
       this.activeLocale = newLocale;
-
-      // Update input value
-      this.updateInputValue();
-
-      console.info(this.value);
     },
 
     fill(formData) {
