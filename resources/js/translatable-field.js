@@ -1,4 +1,7 @@
+import FormField from './components/FormField';
+import DetailField from './components/DetailField';
+
 Nova.booting((Vue, router, store) => {
-  Vue.component('form-translatable-field', require('./components/FormField.vue').default);
-  Vue.component('detail-translatable-field', require('./components/DetailField.vue').default);
+  Vue.component('form-translatable-field', FormField);
+  Vue.component('detail-translatable-field', DetailField);
 });
