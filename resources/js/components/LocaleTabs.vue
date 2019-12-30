@@ -4,7 +4,7 @@
       v-for="locale in locales"
       :key="locale.key"
       class="mr-4 cursor-pointer font-bold text-80"
-      :class="{ 'text-primary': locale.key === activeLocale }"
+      :class="{ 'text-primary border-b-2 border-primary': locale.key === activeLocale }"
       @click="() => $emit('tabClick', locale.key)"
       @dblclick="() => $emit('doubleClick', locale.key)"
     >
