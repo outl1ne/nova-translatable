@@ -1,15 +1,17 @@
 <template>
   <div class="flex select-none" :class="wrapperClasses">
-    <a
-      v-for="locale in locales"
-      :key="locale.key"
-      class="mr-4 cursor-pointer font-bold text-80"
-      :class="{ 'text-primary border-b-2 border-primary': locale.key === activeLocale }"
-      @click="() => $emit('tabClick', locale.key)"
-      @dblclick="() => $emit('doubleClick', locale.key)"
-    >
-      {{ locale.name }}
-    </a>
+    <div class="ml-auto">
+      <a
+        v-for="locale in locales"
+        :key="locale.key"
+        class="ml-3 cursor-pointer font-bold text-80 text-sm"
+        :class="{ 'text-primary border-b-2 border-primary': locale.key === activeLocale }"
+        @click="() => $emit('tabClick', locale.key)"
+        @dblclick="() => $emit('doubleClick', locale.key)"
+      >
+        {{ locale.name }}
+      </a>
+    </div>
   </div>
 </template>
 
