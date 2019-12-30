@@ -4,7 +4,8 @@
       :detail="true"
       :locales="locales"
       :active-locale="activeLocale"
-      @switchLocale="locale => (activeLocale = locale)"
+      @tabClick="locale => (activeLocale = locale)"
+      @doubleClick="setAllLocale"
     />
 
     <component

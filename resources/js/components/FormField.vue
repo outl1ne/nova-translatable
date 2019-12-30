@@ -1,6 +1,6 @@
 <template>
   <div class="translatable-field">
-    <locale-tabs :locales="locales" :active-locale="activeLocale" @switchLocale="switchToLocale" />
+    <locale-tabs :locales="locales" :active-locale="activeLocale" @tabClick="setLocale" @doubleClick="setAllLocale" />
 
     <div v-for="locale in locales" :key="locale.key">
       <component

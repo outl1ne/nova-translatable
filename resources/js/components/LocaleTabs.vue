@@ -5,7 +5,8 @@
       :key="locale.key"
       class="mr-4 cursor-pointer font-bold text-80"
       :class="{ 'text-primary': locale.key === activeLocale }"
-      @click="() => $emit('switchLocale', locale.key)"
+      @click="() => $emit('tabClick', locale.key)"
+      @dblclick="() => $emit('doubleClick', locale.key)"
     >
       {{ locale.name }}
     </a>

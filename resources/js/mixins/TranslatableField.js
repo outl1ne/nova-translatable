@@ -11,6 +11,13 @@ export default {
     this.originalFieldName = this.field.name;
     this.activeLocale = this.locales[0].key;
     this.fakeField = { ...this.field };
+
+    // Listen to all locale event
+    Nova.$on('nova-translatable@setAllLocale', this.setLocale);
+  },
+
+  destroyed() {
+    Nova.$off('nova-translatable@setAllLocale', this.setLocale);
   },
 
   computed: {
@@ -32,20 +39,26 @@ export default {
     },
 
     copyValueFromCurrentLocale() {
+      if (!this.fakeField.fill) return;
+
       const formData = new FormData();
       this.fakeField.fill(formData);
       this.value[this.activeLocale] = formData.get(this.field.attribute);
     },
 
-    switchToLocale(newLocale, copyValue = true) {
+    setLocale(newLocale) {
       // First read and copy the value from current input field
-      if (copyValue) this.copyValueFromCurrentLocale();
+      this.copyValueFromCurrentLocale();
 
       // Set field value
       this.fakeField.value = this.value[newLocale];
 
       // Set new activeLocale
       this.activeLocale = newLocale;
+    },
+
+    setAllLocale(newLocale) {
+      Nova.$emit('nova-translatable@setAllLocale', newLocale);
     },
   },
 };
