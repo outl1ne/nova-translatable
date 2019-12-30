@@ -12,16 +12,18 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any common inpu
 
 ## Features
 
-- Supports almost all fields (including third party ones)
-- Simple to implement with minimal code changes (after `spatie/laravel-translatable` support)
+- **Supports almost all fields** (including third party ones)
+- **Simple to implement** with minimal code changes (after `spatie/laravel-translatable` support)
 - Locale tabs to switch between different locale values of the same field
-- Double click on a tab to switch all fields to that locale
+- **Double click** on a tab to switch all fields to that locale
 
 ## Screenshots
 
 TODO
 
 ## Installation
+
+Firstly, set up [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable).
 
 Install the package in a Laravel Nova project via Composer:
 
