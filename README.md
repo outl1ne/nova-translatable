@@ -19,7 +19,9 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any common inpu
 
 ## Screenshots
 
-TODO
+![Detail View](./docs/detail.png)
+
+![Form View](./docs/form.png)
 
 ## Installation
 
