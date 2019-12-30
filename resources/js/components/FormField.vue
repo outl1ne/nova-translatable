@@ -1,7 +1,13 @@
 <template>
   <div class="translatable-field">
-    <div class="_locale-tabs">
-      <a v-for="locale in locales" :key="locale.key" @click="switchToLocale(locale.key)">
+    <div class="flex p-4">
+      <a
+        class="mr-4 cursor-pointer"
+        :class="{ 'color-primary': locale.key === activeLocale }"
+        v-for="locale in locales"
+        :key="locale.key"
+        @click="switchToLocale(locale.key)"
+      >
         {{ locale.name }}
       </a>
     </div>
@@ -39,9 +45,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.translatable-field {
-  background: red;
-}
-</style>
