@@ -6,9 +6,27 @@ use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Fields\Field;
+use Illuminate\Support\Arr;
 
 class FieldServiceProvider extends ServiceProvider
 {
+    protected function isValidLocaleArray($localeArray)
+    {
+        return (!empty($localeArray) && is_array($localeArray) && Arr::isAssoc($localeArray));
+    }
+
+    public function getLocales($overrideLocales = null)
+    {
+        if (is_callable($overrideLocales)) $overrideLocales = call_user_func($overrideLocales);
+        if ($this->isValidLocaleArray($overrideLocales)) return $overrideLocales;
+
+        $configuredLocales = config('nova-translatable.locales', ['en' => 'English']);
+        if (is_callable($configuredLocales)) $configuredLocales = call_user_func($configuredLocales);
+        if ($this->isValidLocaleArray($configuredLocales)) return $configuredLocales;
+
+        return ['en' => 'English'];
+    }
+
     public function boot()
     {
         // Publish configuration file
@@ -22,7 +40,10 @@ class FieldServiceProvider extends ServiceProvider
         });
 
         // Register macro
-        Field::macro('translatable', function ($locales = []) {
+        $self = $this;
+
+        Field::macro('translatable', function ($overrideLocales = []) use ($self) {
+            $locales = $self->getLocales($overrideLocales);
             $component = $this->component;
 
             $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
