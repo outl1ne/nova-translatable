@@ -11,6 +11,12 @@ class FieldServiceProvider extends ServiceProvider
 {
     public function boot()
     {
+        // Publish configuration file
+        $this->publishes([
+            __DIR__ . '/../config/nova-translatable.php' => config_path('nova-translatable.php'),
+        ], 'nova-translatable-config');
+
+        // Serve asset(s)
         Nova::serving(function (ServingNova $event) {
             Nova::script('translatable-field', __DIR__ . '/../dist/js/translatable-field.js');
         });
