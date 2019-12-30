@@ -1,5 +1,5 @@
 <template>
-  <div class="translatable-field">
+  <div class="translatable-field" ref="main">
     <locale-tabs :locales="locales" :active-locale="activeLocale" @tabClick="setLocale" @doubleClick="setAllLocale" />
 
     <div v-for="locale in locales" :key="locale.key">
@@ -8,6 +8,7 @@
         :is="'form-' + field.translatable.original_component"
         :field="fakeField"
         :resource-name="resourceName"
+        :class="{ 'remove-bottom-border': removeBottomBorder() }"
       ></component>
     </div>
   </div>

@@ -60,5 +60,10 @@ export default {
     setAllLocale(newLocale) {
       Nova.$emit('nova-translatable@setAllLocale', newLocale);
     },
+
+    removeBottomBorder() {
+      if (!this.$refs.main) return false;
+      return this.$refs.main.classList.contains('remove-bottom-border');
+    },
   },
 };
