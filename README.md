@@ -7,7 +7,8 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any common inpu
 
 ## Requirements
 
-- Laravel Nova ^2.9
+- `laravel/nova: ^2.9`
+- `spatie/laravel-translatable: ^4.0`
 
 ## Features
 
