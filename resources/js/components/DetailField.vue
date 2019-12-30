@@ -1,10 +1,11 @@
 <template>
   <div class="translatable-field">
-    <div class="_locale-tabs">
-      <a v-for="locale in locales" :key="locale.key" @click="activeLocale = locale.key">
-        {{ locale.name }}
-      </a>
-    </div>
+    <locale-tabs
+      :detail="true"
+      :locales="locales"
+      :active-locale="activeLocale"
+      @switchLocale="locale => (activeLocale = locale)"
+    />
 
     <component
       :is="'detail-' + field.translatable.original_component"
@@ -16,8 +17,10 @@
 
 <script>
 import TranslatableField from '../mixins/TranslatableField';
+import LocaleTabs from './LocaleTabs';
 
 export default {
+  components: { LocaleTabs },
   mixins: [TranslatableField],
   props: ['resourceName', 'field'],
 };

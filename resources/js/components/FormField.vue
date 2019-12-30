@@ -1,16 +1,6 @@
 <template>
   <div class="translatable-field">
-    <div class="flex p-4">
-      <a
-        class="mr-4 cursor-pointer"
-        :class="{ 'color-primary': locale.key === activeLocale }"
-        v-for="locale in locales"
-        :key="locale.key"
-        @click="switchToLocale(locale.key)"
-      >
-        {{ locale.name }}
-      </a>
-    </div>
+    <locale-tabs :locales="locales" :active-locale="activeLocale" @switchLocale="switchToLocale" />
 
     <div v-for="locale in locales" :key="locale.key">
       <component
@@ -26,8 +16,10 @@
 <script>
 import { FormField, HandlesValidationErrors } from 'laravel-nova';
 import TranslatableField from '../mixins/TranslatableField';
+import LocaleTabs from './LocaleTabs';
 
 export default {
+  components: { LocaleTabs },
   mixins: [HandlesValidationErrors, FormField, TranslatableField],
   props: ['field', 'resourceId', 'resourceName'],
   methods: {
