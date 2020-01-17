@@ -17,6 +17,7 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 - **Simple to implement** with minimal code changes (after `spatie/laravel-translatable` support)
 - Locale tabs to switch between different locale values of the same field
 - **Double click** on a tab to switch all fields to that locale
+- Supports [nova-settings](https://github.com/optimistdigital/nova-settings) package
 
 ## Screenshots
 
