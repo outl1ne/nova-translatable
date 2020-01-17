@@ -58,6 +58,7 @@ class FieldServiceProvider extends ServiceProvider
 
                 $this->withMeta([
                     'translatable' => [
+                        'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
                         'value' => $value
@@ -75,9 +76,10 @@ class FieldServiceProvider extends ServiceProvider
             });
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
-                $value = $request->{$attribute};
+                $realAttribute = $this->meta['translatable']['original_attribute'];
+                $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
-                $model->setTranslations($attribute, $translations);
+                $model->setTranslations($realAttribute, $translations);
             });
 
             return $this;
