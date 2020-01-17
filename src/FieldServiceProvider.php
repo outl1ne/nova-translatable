@@ -76,10 +76,11 @@ class FieldServiceProvider extends ServiceProvider
             });
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
-                $realAttribute = $this->meta['translatable']['original_attribute'];
+                $realAttribute = $this->meta['translatable']['original_attribute'] ?? $attribute;
                 $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
-                $model->setTranslations($realAttribute, $translations);
+                if (method_exists($model, 'setTranslations')) $model->setTranslations($realAttribute, $translations);
+                else $model->{$realAttribute} = $translations;
             });
 
             return $this;
