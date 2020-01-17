@@ -1,6 +1,13 @@
 <template>
   <div class="translatable-field" ref="main">
-    <locale-tabs :locales="locales" :active-locale="activeLocale" @tabClick="setLocale" @doubleClick="setAllLocale" />
+    <locale-tabs
+      :locales="locales"
+      :active-locale="activeLocale"
+      :errors="errors"
+      :error-attributes="errorAttributes"
+      @tabClick="setLocale"
+      @doubleClick="setAllLocale"
+    />
 
     <div v-for="locale in locales" :key="locale.key">
       <component
@@ -8,6 +15,7 @@
         :is="'form-' + field.translatable.original_component"
         :field="fakeField"
         :resource-name="resourceName"
+        :errors="errors"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
       ></component>
     </div>
@@ -33,7 +41,19 @@ export default {
       this.copyValueFromCurrentLocale();
 
       // Add value to FormData
-      formData.append(this.field.attribute, JSON.stringify(this.value));
+      for (const locale of this.locales) {
+        formData.append(`${this.field.attribute}[${locale.key}]`, this.value[locale.key]);
+      }
+    },
+  },
+  computed: {
+    errorAttributes() {
+      const locales = this.locales;
+      const errorAttributes = {};
+      for (const locale of locales) {
+        errorAttributes[locale.key] = `${this.field.attribute}.${locale.key}`;
+      }
+      return errorAttributes;
     },
   },
 };

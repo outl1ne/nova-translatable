@@ -47,27 +47,36 @@ class FieldServiceProvider extends ServiceProvider
             $component = $this->component;
 
             $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
+                // Load value from either the model or from the given $value
                 if (isset($resource) && method_exists($resource, 'getTranslations')) {
                     $value = $resource->getTranslations($attribute);
                 } else if (is_string($value)) {
                     $value = json_decode($value);
                 }
 
+                $value = (array) $value;
+
                 $this->withMeta([
                     'translatable' => [
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => (array) $value
+                        'value' => $value
                     ],
                 ]);
 
                 $this->component = 'translatable-field';
 
+                // If it's a CREATE or UPDATE request, we need to trick the validator a bit
+                if (in_array(request()->method(), ['PUT', 'POST'])) {
+                    $this->attribute = "{$this->attribute}.*";
+                }
+
                 return $this->resolveAttribute($resource, $attribute);
             });
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
-                $translations = (array) json_decode($request->{$attribute});
+                $value = $request->{$attribute};
+                $translations = is_string($value) ? (array) json_decode($value) : $value;
                 $model->setTranslations($attribute, $translations);
             });
 

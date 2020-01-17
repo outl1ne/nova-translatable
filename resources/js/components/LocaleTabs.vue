@@ -5,7 +5,10 @@
         v-for="locale in locales"
         :key="locale.key"
         class="ml-3 cursor-pointer font-bold text-80 text-sm"
-        :class="{ 'text-primary border-b-2 border-primary': locale.key === activeLocale }"
+        :class="{
+          'text-primary border-b-2 border-primary': locale.key === activeLocale,
+          'text-danger border-danger': hasError(locale.key),
+        }"
         @click="() => $emit('tabClick', locale.key)"
         @dblclick="() => $emit('doubleClick', locale.key)"
       >
@@ -17,11 +20,18 @@
 
 <script>
 export default {
-  props: ['locales', 'activeLocale', 'detail'],
+  props: ['locales', 'activeLocale', 'detail', 'errors', 'errorAttributes'],
   computed: {
     wrapperClasses() {
       if (this.detail) return ['pt-4'];
       return ['pt-4', 'px-8'];
+    },
+  },
+  methods: {
+    hasError(locale) {
+      if (!this.errors || !this.errorAttributes) return false;
+      const errorAttribute = this.errorAttributes[locale];
+      return this.errors.has(errorAttribute);
     },
   },
 };
