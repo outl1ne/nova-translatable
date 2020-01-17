@@ -10,7 +10,7 @@ export default {
     this.value = this.getInitialValue();
     this.originalFieldName = this.field.name;
     this.activeLocale = this.locales[0].key;
-    this.fakeField = { ...this.field };
+    this.fakeField = { ...this.field, value: this.value[this.activeLocale] };
 
     // Listen to all locale event
     Nova.$on('nova-translatable@setAllLocale', this.setLocale);
