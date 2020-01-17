@@ -13,6 +13,7 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 ## Features
 
 - **Supports almost all fields** (including third party ones)
+- **Supports default validation automatically**
 - **Simple to implement** with minimal code changes (after `spatie/laravel-translatable` support)
 - Locale tabs to switch between different locale values of the same field
 - **Double click** on a tab to switch all fields to that locale
@@ -22,6 +23,8 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 ![Detail View](./docs/detail.png)
 
 ![Form View](./docs/form.png)
+
+![Form View w/ Validation Errors](./docs/validation.png)
 
 ## Installation
 
@@ -44,10 +47,12 @@ Call `->translatable()` on any field, like so:
 ```php
 // Any Nova field
 Text::make('Name')
+  ->rules('required', 'min:2')
   ->translatable(),
 
 // Any third-party input field
 Multiselect::make('Football teams')
+  ->rules('required')
   ->translatable(),
 
 // Optionally pass custom locales on a per-field basis
