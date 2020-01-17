@@ -47,11 +47,17 @@ class FieldServiceProvider extends ServiceProvider
             $component = $this->component;
 
             $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
+                if (isset($resource) && method_exists($resource, 'getTranslations')) {
+                    $value = $resource->getTranslations($attribute);
+                } else if (is_string($value)) {
+                    $value = json_decode($value);
+                }
+
                 $this->withMeta([
                     'translatable' => [
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => $resource->getTranslations($attribute)
+                        'value' => (array) $value
                     ],
                 ]);
 
