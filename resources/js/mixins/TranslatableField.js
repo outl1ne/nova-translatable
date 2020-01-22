@@ -31,13 +31,16 @@ export default {
         name: this.field.translatable.locales[key],
       }));
     },
+    fieldValueMustBeAnObject() {
+      return ['key-value-field'].includes(this.field.translatable.original_component)
+    }
   },
 
   methods: {
     getInitialValue() {
       const initialValue = {};
       for (const locale of this.locales) {
-        initialValue[locale.key] = this.field.translatable.value[locale.key] || '';
+        initialValue[locale.key] = this.formatValue(this.field.translatable.value[locale.key] || '');
       }
       return initialValue;
     },
@@ -55,7 +58,7 @@ export default {
       this.copyValueFromCurrentLocale();
 
       // Set field value
-      this.fakeField.value = this.value[newLocale] || '';
+      this.fakeField.value = this.formatValue(this.value[newLocale] || '');
       this.fakeField.attribute = `${this.field.attribute}.${newLocale}`;
 
       // Set new activeLocale
@@ -70,5 +73,15 @@ export default {
       if (!this.$refs.main) return false;
       return this.$refs.main.classList.contains('remove-bottom-border');
     },
+
+    formatValue(value) {
+      let valueFormatted = value || ''
+
+      if(this.fieldValueMustBeAnObject && !_.isObject(valueFormatted)) {
+        valueFormatted = JSON.parse(valueFormatted || '{}')
+      }
+
+      return valueFormatted
+    }
   },
 };

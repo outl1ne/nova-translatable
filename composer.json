@@ -1,5 +1,5 @@
 {
-  "name": "optimistdigital/nova-translatable",
+  "name": "ngiraud/nova-translatable",
   "description": "A laravel-translatable extension for Laravel Nova.",
   "keywords": [
     "laravel",
