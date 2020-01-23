@@ -8,12 +8,26 @@
       @doubleClick="setAllLocale"
     />
 
-    <component
-      :is="'detail-' + field.translatable.original_component"
-      :field="{ ...field, value: this.value[activeLocale] }"
-      :class="{ 'remove-bottom-border': removeBottomBorder() }"
-      :resource-name="resourceName"
-    ></component>
+    <template v-if="fieldValueMustBeAnObject">
+      <component
+        v-for="locale in locales"
+        :key="locale.key"
+        v-if="locale.key === activeLocale && value[locale.key]"
+        :is="'detail-' + field.translatable.original_component"
+        :field="{ ...field, value: value[locale.key]}"
+        :class="{ 'remove-bottom-border': removeBottomBorder() }"
+        :resource-name="resourceName"
+      ></component>
+    </template>
+
+    <template v-else>
+      <component
+        :is="'detail-' + field.translatable.original_component"
+        :field="{ ...field, value: value[activeLocale]}"
+        :class="{ 'remove-bottom-border': removeBottomBorder() }"
+        :resource-name="resourceName"
+      ></component>
+    </template>
   </div>
 </template>
 
