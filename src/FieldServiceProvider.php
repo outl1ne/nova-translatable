@@ -79,8 +79,12 @@ class FieldServiceProvider extends ServiceProvider
                 $realAttribute = $this->meta['translatable']['original_attribute'] ?? $attribute;
                 $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
-                if (method_exists($model, 'setTranslations')) $model->setTranslations($realAttribute, $translations);
-                else $model->{$realAttribute} = $translations;
+
+                if (method_exists($model, 'setTranslations')) {
+                    $model->setTranslations($realAttribute, $translations);
+                } else {
+                    $model->{$realAttribute} = $translations;
+                }
             });
 
             return $this;
