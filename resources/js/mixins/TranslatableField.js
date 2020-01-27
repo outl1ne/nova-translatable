@@ -9,7 +9,7 @@ export default {
   mounted() {
     this.value = this.getInitialValue();
     this.originalFieldName = this.field.name;
-    this.activeLocale = this.locales[0].key;
+    this.activeLocale = this.getActiveLocale();
     this.fakeField = {
       ...this.field,
       value: this.value[this.activeLocale] || '',
@@ -43,6 +43,16 @@ export default {
         initialValue[locale.key] = this.formatValue(this.field.translatable.value[locale.key] || '');
       }
       return initialValue;
+    },
+
+    getActiveLocale() {
+      let localesFiltered = this.locales.filter(({key}) => key === Nova.config.locale);
+
+      if(localesFiltered.length === 0) {
+        localesFiltered = this.locales;
+      }
+
+      return localesFiltered[0].key;
     },
 
     copyValueFromCurrentLocale() {
