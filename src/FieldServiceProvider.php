@@ -27,7 +27,7 @@ class FieldServiceProvider extends ServiceProvider
         return ['en' => 'English'];
     }
 
-    public function boot()
+    public function register()
     {
         // Publish configuration file
         $this->publishes([
@@ -87,7 +87,7 @@ class FieldServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
+    public function boot()
     {
         //
     }
