@@ -31,9 +31,10 @@ export default {
         name: this.field.translatable.locales[key],
       }));
     },
+
     fieldValueMustBeAnObject() {
-      return ['key-value-field'].includes(this.field.translatable.original_component)
-    }
+      return ['key-value-field'].includes(this.field.translatable.original_component);
+    },
   },
 
   methods: {
@@ -46,9 +47,9 @@ export default {
     },
 
     getActiveLocale() {
-      let localesFiltered = this.locales.filter(({key}) => key === Nova.config.locale);
+      let localesFiltered = this.locales.filter(({ key }) => key === Nova.config.locale);
 
-      if(localesFiltered.length === 0) {
+      if (localesFiltered.length === 0) {
         localesFiltered = this.locales;
       }
 
@@ -85,13 +86,17 @@ export default {
     },
 
     formatValue(value) {
-      let valueFormatted = value || ''
+      let formattedValue = value || '';
 
-      if(this.fieldValueMustBeAnObject && !_.isObject(valueFormatted)) {
-        valueFormatted = JSON.parse(valueFormatted || '{}')
+      if (this.fieldValueMustBeAnObject && !_.isObject(formattedValue)) {
+        try {
+          formattedValue = JSON.parse(formattedValue || '{}');
+        } catch (e) {
+          formattedValue = {};
+        }
       }
 
-      return valueFormatted
-    }
+      return formattedValue;
+    },
   },
 };

@@ -26,13 +26,12 @@ export default {
       if (this.detail) return ['pt-4'];
       return ['pt-4', 'px-8'];
     },
+
     sortedLocales() {
-      const novaLocale = _.find(this.locales, ['key', Nova.config.locale])
-      if(!novaLocale) {
-        return this.locales
-      }
-      return [novaLocale, ...this.locales.filter(({key}) => key !== Nova.config.locale)];
-    }
+      const novaLocale = _.find(this.locales, ['key', Nova.config.locale]);
+      if (!novaLocale) return this.locales;
+      return [novaLocale, ...this.locales.filter(({ key }) => key !== Nova.config.locale)];
+    },
   },
   methods: {
     hasError(locale) {
