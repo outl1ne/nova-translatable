@@ -8,26 +8,15 @@
       @doubleClick="setAllLocale"
     />
 
-    <template v-if="fieldValueMustBeAnObject">
+    <div v-for="locale in locales" :key="locale.key">
       <component
-        v-for="locale in locales"
-        :key="locale.key"
         v-if="locale.key === activeLocale && value[locale.key]"
         :is="'detail-' + field.translatable.original_component"
-        :field="{ ...field, value: value[locale.key]}"
+        :field="{ ...field, value: value[locale.key] }"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
         :resource-name="resourceName"
       ></component>
-    </template>
-
-    <template v-else>
-      <component
-        :is="'detail-' + field.translatable.original_component"
-        :field="{ ...field, value: value[activeLocale]}"
-        :class="{ 'remove-bottom-border': removeBottomBorder() }"
-        :resource-name="resourceName"
-      ></component>
-    </template>
+    </div>
   </div>
 </template>
 
