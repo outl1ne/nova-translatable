@@ -1,19 +1,19 @@
 <template>
-  <div class="translatable-field" ref="main">
+  <div class="translatable-field" ref="main" v-if="fields">
     <locale-tabs
       :locales="locales"
       :active-locale="activeLocale"
       :errors="errors"
       :error-attributes="errorAttributes"
-      @tabClick="setLocale"
+      @tabClick="setActiveLocale"
       @doubleClick="setAllLocale"
     />
 
     <div v-for="locale in locales" :key="locale.key">
       <component
-        v-if="locale.key === activeLocale"
+        v-show="locale.key === activeLocale"
         :is="'form-' + field.translatable.original_component"
-        :field="fakeField"
+        :field="fields[locale.key]"
         :resource-name="resourceName"
         :errors="errors"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
@@ -37,12 +37,23 @@ export default {
     },
 
     fill(formData) {
-      // Copy current value
-      this.copyValueFromCurrentLocale();
+      if (this.isFlexible) {
+        const tempFormData = new FormData();
+        const data = {};
+        for (const locale of this.locales) {
+          const field = this.fields[locale.key];
+          field.fill(tempFormData);
+          data[locale.key] = tempFormData.get(field.attribute);
+        }
+        formData.append(this.field.translatable.original_attribute, JSON.stringify(data));
+        return;
+      }
 
-      // Add value to FormData
+      const tempFormData = new FormData();
       for (const locale of this.locales) {
-        formData.append(`${this.field.attribute}[${locale.key}]`, this.value[locale.key]);
+        const field = this.fields[locale.key];
+        field.fill(tempFormData);
+        formData.append(`${field.translatable.original_attribute}[${locale.key}]`, tempFormData.get(field.attribute));
       }
     },
   },
