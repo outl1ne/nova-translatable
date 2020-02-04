@@ -1,7 +1,7 @@
 <template>
   <component
     :is="'index-' + field.translatable.original_component"
-    :field="{ ...field, value: this.value[activeLocale] }"
+    :field="fields[activeLocale]"
     :resource-name="resourceName"
   ></component>
 </template>

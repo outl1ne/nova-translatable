@@ -10,9 +10,9 @@
 
     <div v-for="locale in locales" :key="locale.key">
       <component
-        v-if="locale.key === activeLocale && value[locale.key]"
+        v-show="locale.key === activeLocale"
         :is="'detail-' + field.translatable.original_component"
-        :field="{ ...field, value: value[locale.key] }"
+        :field="fields[locale.key]"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
         :resource-name="resourceName"
       ></component>

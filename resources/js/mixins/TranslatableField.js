@@ -3,9 +3,10 @@ export default {
     activeLocale: void 0,
     originalFieldName: void 0,
     fields: void 0,
+    isMounted: false,
   }),
 
-  mounted() {
+  beforeMount() {
     this.originalFieldName = this.field.name;
     this.activeLocale = this.locales[0].key;
 
@@ -25,6 +26,10 @@ export default {
 
     // Listen to setAllLocale event
     Nova.$on('nova-translatable@setAllLocale', this.setActiveLocale);
+  },
+
+  mounted() {
+    this.isMounted = true;
   },
 
   destroyed() {
@@ -73,7 +78,7 @@ export default {
     },
 
     removeBottomBorder() {
-      if (!this.$refs.main) return false;
+      if (!this.isMounted || !this.$refs.main) return false;
       return this.$refs.main.classList.contains('remove-bottom-border');
     },
 

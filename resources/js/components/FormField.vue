@@ -1,5 +1,5 @@
 <template>
-  <div class="translatable-field" ref="main" v-if="fields">
+  <div class="translatable-field" ref="main">
     <locale-tabs
       :locales="locales"
       :active-locale="activeLocale"
