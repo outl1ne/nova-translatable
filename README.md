@@ -27,6 +27,14 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 
 ![Form View w/ Validation Errors](./docs/validation.png)
 
+## Known non-working fields
+
+- `Image` and `File` inside `Flexible (nova-flexible-content)`
+  - Workarounds:
+    - [optimistdigital/nova-media-field](https://github.com/optimistdigital/nova-media-field)
+    - [ebess/advanced-nova-media-library](https://github.com/ebess/advanced-nova-media-library)
+    - Or any library that uploads images/files using XHR
+
 ## Installation
 
 Firstly, set up [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable).
