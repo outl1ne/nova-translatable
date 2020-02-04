@@ -38,6 +38,8 @@ export default {
 
     fill(formData) {
       if (this.isFlexible) {
+        if (this.isFile) alert('Sorry, nova-translatable File and Image fields inside Flexible currently do not work.');
+
         const tempFormData = new FormData();
         const data = {};
         for (const locale of this.locales) {
