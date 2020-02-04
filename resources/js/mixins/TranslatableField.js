@@ -49,6 +49,10 @@ export default {
     isFlexible() {
       return this.$parent && this.$parent.field && this.$parent.field.component === 'nova-flexible-content';
     },
+
+    isFile() {
+      return ['file-field'].includes(this.field.translatable.original_component);
+    },
   },
 
   methods: {
