@@ -46,7 +46,9 @@ class FieldServiceProvider extends ServiceProvider
             $locales = $self->getLocales($overrideLocales);
             $component = $this->component;
 
-            $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
+            $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component, $self) {
+                $attribute = $self->normalizeAttribute($attribute);
+
                 // Load value from either the model or from the given $value
                 if (isset($resource) && method_exists($resource, 'getTranslations')) {
                     $value = $resource->getTranslations($attribute);
@@ -75,13 +77,8 @@ class FieldServiceProvider extends ServiceProvider
                 return $this->resolveAttribute($resource, $attribute);
             });
 
-            $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
-                $realAttribute = $this->meta['translatable']['original_attribute'] ?? $attribute;
-
-                // Undo validator tricking
-                if (in_array(request()->method(), ['PUT', 'POST'])) {
-                    if (substr($realAttribute, -2) === '.*') $realAttribute = substr($realAttribute, 0, -2);
-                }
+            $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) use ($self) {
+                $realAttribute = $self->normalizeAttribute($this->meta['translatable']['original_attribute'] ?? $attribute);
 
                 $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
@@ -95,6 +92,14 @@ class FieldServiceProvider extends ServiceProvider
 
             return $this;
         });
+    }
+
+    public function normalizeAttribute($attribute)
+    {
+        if (in_array(request()->method(), ['PUT', 'POST'])) {
+            if (substr($attribute, -2) === '.*') $attribute = substr($attribute, 0, -2);
+        }
+        return $attribute;
     }
 
     public function boot()
