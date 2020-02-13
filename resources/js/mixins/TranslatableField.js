@@ -20,7 +20,7 @@ export default {
         (this.fields[locale.key] = {
           ...this.field,
           value: initialValues[locale.key] || '',
-          attribute: `${this.field.attribute}`,
+          attribute: `${this.field.attribute}_${locale.key}`, // Append '_en' to avoid duplicate ID-s in DOM
         })
     );
 
