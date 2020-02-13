@@ -45,17 +45,28 @@ export default {
         for (const locale of this.locales) {
           const field = this.fields[locale.key];
           field.fill(tempFormData);
-          data[locale.key] = tempFormData.get(field.attribute);
+
+          const formDataKeys = Array.from(tempFormData.keys());
+          data[locale.key] = tempFormData.get(formDataKeys[0]);
         }
         formData.append(this.field.translatable.original_attribute, JSON.stringify(data));
         return;
       }
 
-      const tempFormData = new FormData();
       for (const locale of this.locales) {
+        const tempFormData = new FormData();
         const field = this.fields[locale.key];
         field.fill(tempFormData);
-        formData.append(`${field.translatable.original_attribute}[${locale.key}]`, tempFormData.get(field.attribute));
+
+        const formDataKeys = Array.from(tempFormData.keys());
+        for (const key of formDataKeys) {
+          const isArray = key.slice(-3).match(/\[\d\]/);
+          if (isArray) {
+            formData.append(`${key.slice(0, -3)}[${locale.key}]${key.slice(-3)}`, tempFormData.get(key));
+          } else {
+            formData.append(`${key}[${locale.key}]`, tempFormData.get(key));
+          }
+        }
       }
     },
   },
