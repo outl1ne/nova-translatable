@@ -64,7 +64,7 @@ export default {
         const formDataKeys = Array.from(tempFormData.keys());
         for (const rawKey of formDataKeys) {
           let key = rawKey;
-          if (key.slice(-LOC_LEN) === `_${locale.key}`) key = key.slice(0, -LOC_LEN);
+          if (key.slice(-LOC_LEN) === `.${locale.key}`) key = key.slice(0, -LOC_LEN);
 
           const isArray = !!key.match(ARR_REGEX());
           if (isArray) {
