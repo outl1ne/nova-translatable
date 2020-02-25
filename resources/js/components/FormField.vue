@@ -36,52 +36,78 @@ export default {
       // Do nothing
     },
 
-    fill(formData) {
-      if (this.isFlexible) {
-        if (this.isFile) alert('Sorry, nova-translatable File and Image fields inside Flexible currently do not work.');
+    isKeyAnArray(key) {
+      const ARR_REGEX = () => /\[\d+\]$/g;
+      return !!key.match(ARR_REGEX());
+    },
 
-        const data = {};
+    getKeyAndValue(rawKey, locale, formData) {
+      const ARR_REGEX = () => /\[\d+\]$/g;
+      const LOC_LEN = locale.key.length + 1;
+
+      let key = rawKey;
+
+      // Remove '.en' ending from key
+      if (key.slice(-LOC_LEN) === `.${locale.key}`) key = key.slice(0, -LOC_LEN);
+
+      // Is key is an array, we need to remove the '.en' part from '.en[0]'
+      const isArray = !!key.match(ARR_REGEX());
+      if (isArray) {
+        const result = ARR_REGEX().exec(key);
+        key = `${key.slice(0, result.index - LOC_LEN)}${key.slice(result.index)}`;
+      }
+
+      if (isArray) {
+        const result = ARR_REGEX().exec(key);
+        return [`${key.slice(0, result.index)}[${locale.key}]${key.slice(result.index)}`, formData.get(rawKey)];
+      } else {
+        return [`${key}[${locale.key}]`, formData.get(rawKey)];
+      }
+    },
+
+    fill(formData) {
+      try {
+        if (this.isFlexible) {
+          if (this.isFile) {
+            alert('Sorry, nova-translatable File and Image fields inside Flexible currently do not work.');
+            return;
+          }
+
+          const data = {};
+          for (const locale of this.locales) {
+            const tempFormData = new FormData();
+            const field = this.fields[locale.key];
+            field.fill(tempFormData);
+
+            const formDataKeys = Array.from(tempFormData.keys());
+            for (const rawKey of formDataKeys) {
+              const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
+              const isArray = this.isKeyAnArray(rawKey);
+              if (isArray) {
+                if (!data[locale.key]) data[locale.key] = [];
+                data[locale.key].push(value);
+              } else {
+                data[locale.key] = value;
+              }
+            }
+          }
+          formData.append(this.field.translatable.original_attribute, JSON.stringify(data));
+          return;
+        }
+
         for (const locale of this.locales) {
           const tempFormData = new FormData();
           const field = this.fields[locale.key];
           field.fill(tempFormData);
 
           const formDataKeys = Array.from(tempFormData.keys());
-          data[locale.key] = tempFormData.get(formDataKeys[0]);
-        }
-        formData.append(this.field.translatable.original_attribute, JSON.stringify(data));
-        return;
-      }
-
-      for (const locale of this.locales) {
-        const ARR_REGEX = () => /\[\d+\]$/g;
-        const LOC_LEN = locale.key.length + 1;
-
-        const tempFormData = new FormData();
-        const field = this.fields[locale.key];
-        field.fill(tempFormData);
-
-        const formDataKeys = Array.from(tempFormData.keys());
-        for (const rawKey of formDataKeys) {
-          let key = rawKey;
-          if (key.slice(-LOC_LEN) === `.${locale.key}`) key = key.slice(0, -LOC_LEN);
-
-          const isArray = !!key.match(ARR_REGEX());
-          if (isArray) {
-            const result = ARR_REGEX().exec(key);
-            key = `${key.slice(0, result.index - LOC_LEN)}${key.slice(result.index)}`;
-          }
-
-          if (isArray) {
-            const result = ARR_REGEX().exec(key);
-            formData.append(
-              `${key.slice(0, result.index)}[${locale.key}]${key.slice(result.index)}`,
-              tempFormData.get(rawKey)
-            );
-          } else {
-            formData.append(`${key}[${locale.key}]`, tempFormData.get(rawKey));
+          for (const rawKey of formDataKeys) {
+            const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
+            formData.append(key, value);
           }
         }
+      } catch (e) {
+        console.error(e);
       }
     },
   },
