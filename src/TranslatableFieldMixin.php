@@ -2,6 +2,8 @@
 
 namespace OptimistDigital\NovaTranslatable;
 
+use Laravel\Nova\Http\Requests\NovaRequest;
+
 class TranslatableFieldMixin
 {
     public function translatable()
@@ -9,6 +11,23 @@ class TranslatableFieldMixin
         return function ($overrideLocales = []) {
             $locales = FieldServiceProvider::getLocales($overrideLocales);
             $component = $this->component;
+            $originalShowOnCreation = $this->showOnCreation;
+
+            $this->showOnCreating(function (NovaRequest $request) use ($locales, $component, $originalShowOnCreation) {
+                $this->withMeta([
+                    'translatable' => [
+                        'original_attribute' => $this->attribute,
+                        'original_component' => $component,
+                        'locales' => $locales,
+                        'value' => (object) [],
+                    ],
+                ]);
+
+                $this->component = 'translatable-field';
+
+                $this->showOnCreation = $originalShowOnCreation;
+                return $this->isShownOnCreation($request);
+            });
 
             $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
                 $attribute = FieldServiceProvider::normalizeAttribute($attribute);
