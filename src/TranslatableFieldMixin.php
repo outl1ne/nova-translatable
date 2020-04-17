@@ -42,7 +42,7 @@ class TranslatableFieldMixin
                 }
 
                 $value = array_map(function ($val) {
-                    !is_numeric($val) ? $val : (float) $val;
+                    return !is_numeric($val) ? $val : (float) $val;
                 }, (array) $value);
 
                 $this->component = 'translatable-field';
@@ -86,7 +86,7 @@ class TranslatableFieldMixin
                 }
 
                 $value = array_map(function ($val) {
-                    !is_numeric($val) ? $val : (float) $val;
+                    return !is_numeric($val) ? $val : (float) $val;
                 }, (array) $value);
 
                 $this->withMeta([
