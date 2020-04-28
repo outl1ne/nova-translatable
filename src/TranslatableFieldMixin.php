@@ -2,6 +2,7 @@
 
 namespace OptimistDigital\NovaTranslatable;
 
+use Exception;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Select;
 
@@ -83,6 +84,18 @@ class TranslatableFieldMixin
                     $value = $resource->getTranslations($attribute);
                 } else {
                     $value = data_get($resource, str_replace('->', '.', $attribute));
+                }
+
+                try {
+                    if (!is_array($value)) {
+                        if (is_object($value)) {
+                            $value = (array) $value;
+                        } else {
+                            $testValue = json_decode($value, true);
+                            if (is_array($testValue)) $value = $testValue;
+                        }
+                    }
+                } catch (Exception $e) {
                 }
 
                 $value = array_map(function ($val) {
