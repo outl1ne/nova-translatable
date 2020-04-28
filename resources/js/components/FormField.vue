@@ -85,8 +85,7 @@ export default {
             for (const rawKey of formDataKeys) {
               const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
 
-              if(key.endsWith(originalAttribute + `[${locale.key}]`)) {
-
+              if (key.endsWith(originalAttribute + `[${locale.key}]`)) {
                 const isArray = this.isKeyAnArray(rawKey);
 
                 if (isArray) {
@@ -95,9 +94,7 @@ export default {
                 } else {
                   data[locale.key] = value;
                 }
-
               }
-
             }
           }
           formData.append(originalAttribute, JSON.stringify(data));
