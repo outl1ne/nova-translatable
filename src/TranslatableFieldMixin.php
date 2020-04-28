@@ -5,6 +5,7 @@ namespace OptimistDigital\NovaTranslatable;
 use Exception;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Textarea;
 
 class TranslatableFieldMixin
 {
@@ -72,6 +73,14 @@ class TranslatableFieldMixin
                         'value' => $value
                     ],
                 ]);
+                
+                /**
+                 * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e() 
+                 * and it only accepts string, passing an array will cause a crash
+                 */
+                if ($this instanceof Textarea) {
+                    return parent::resolveForDisplay($resource, $attribute);
+                }
 
                 return $this->resolveForDisplay($resource, $attribute);
             });
