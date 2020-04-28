@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.4] - 2020-04-28
+
+### Changed
+
+- Fixed Textarea when not using `spatie/laravel-translatable` (thanks to [@milewski](https://github.com/milewski))
+- Fixed issue with packages that populate more than 1 attribute on `FormData` (thanks to [@milewski](https://github.com/milewski))
+
 ## [1.5.3] - 2020-04-17
 
 ### Changed
