@@ -80,18 +80,27 @@ export default {
             field.fill(tempFormData);
 
             const formDataKeys = Array.from(tempFormData.keys());
+            const originalAttribute = this.field.translatable.original_attribute;
+
             for (const rawKey of formDataKeys) {
               const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
-              const isArray = this.isKeyAnArray(rawKey);
-              if (isArray) {
-                if (!data[locale.key]) data[locale.key] = [];
-                data[locale.key].push(value);
-              } else {
-                data[locale.key] = value;
+
+              if(key.endsWith(originalAttribute + `[${locale.key}]`)) {
+
+                const isArray = this.isKeyAnArray(rawKey);
+
+                if (isArray) {
+                  if (!data[locale.key]) data[locale.key] = [];
+                  data[locale.key].push(value);
+                } else {
+                  data[locale.key] = value;
+                }
+
               }
+
             }
           }
-          formData.append(this.field.translatable.original_attribute, JSON.stringify(data));
+          formData.append(originalAttribute, JSON.stringify(data));
           return;
         }
 
