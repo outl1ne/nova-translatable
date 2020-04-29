@@ -74,13 +74,14 @@ export default {
           }
 
           const data = {};
+          const originalAttribute = this.field.translatable.original_attribute;
+          
           for (const locale of this.locales) {
             const tempFormData = new FormData();
             const field = this.fields[locale.key];
             field.fill(tempFormData);
 
-            const formDataKeys = Array.from(tempFormData.keys());
-            const originalAttribute = this.field.translatable.original_attribute;
+            const formDataKeys = Array.from(tempFormData.keys());            
 
             for (const rawKey of formDataKeys) {
               const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
