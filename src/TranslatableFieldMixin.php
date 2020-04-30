@@ -123,8 +123,11 @@ class TranslatableFieldMixin
                 $this->component = 'translatable-field';
 
                 // If it's a CREATE or UPDATE request, we need to trick the validator a bit
-                if (in_array(request()->method(), ['PUT', 'POST'])) {
+                $hasValidationTrick = property_exists($this, '__validationTrick') && $this->__validationTrick;
+
+                if (in_array(request()->method(), ['PUT', 'POST']) && !$hasValidationTrick) {
                     $this->attribute = "{$this->attribute}.*";
+                    $this->__validationTrick = true;
                 }
 
                 return $this->resolveAttribute($resource, $attribute);
@@ -132,7 +135,6 @@ class TranslatableFieldMixin
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
                 $realAttribute = FieldServiceProvider::normalizeAttribute($this->meta['translatable']['original_attribute'] ?? $attribute);
-
                 $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
 
