@@ -5,6 +5,7 @@ namespace OptimistDigital\NovaTranslatable;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
 use Laravel\Nova\Fields\Field;
 
@@ -46,7 +47,7 @@ class FieldServiceProvider extends ServiceProvider
     public static function normalizeAttribute($attribute)
     {
         if (in_array(request()->method(), ['PUT', 'POST'])) {
-            if (substr($attribute, -2) === '.*') $attribute = substr($attribute, 0, -2);
+            if (Str::endsWith($attribute, '.*')) $attribute = Str::before($attribute, '.*');
         }
         return $attribute;
     }
