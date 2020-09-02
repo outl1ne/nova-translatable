@@ -29,7 +29,9 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 
 ## Limitations
 
-- The following methods can not be used: `displayUsing`, `resolveUsing`, `showOnCreating`, `fillUsing`
+- The following methods can not be used, as this package uses them internally:
+  - `resolveUsing`
+  - `fillUsing`
 
 ## Screenshots
 
