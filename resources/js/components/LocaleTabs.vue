@@ -1,9 +1,5 @@
 <template>
-  <div 
-    v-show="sortedLocales.length > 1"
-    class="flex select-none" 
-    :class="wrapperClasses"
-  >
+  <div v-show="sortedLocales.length > 1" class="flex select-none" :class="wrapperClasses">
     <div class="ml-auto">
       <a
         v-for="locale in sortedLocales"

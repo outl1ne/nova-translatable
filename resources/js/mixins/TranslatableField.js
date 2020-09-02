@@ -21,7 +21,7 @@ export default {
           ...this.field,
           value: initialValues[locale.key] || '',
           attribute: `${this.field.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
-          validationKey: `${this.field.attribute}.${locale.key}` // Append locale to validationKey
+          validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
         })
     );
 
