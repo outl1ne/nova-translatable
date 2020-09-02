@@ -54,7 +54,6 @@ class TranslatableFieldMixin
 
                 // If it's a CREATE or UPDATE request, we need to trick the validator a bit
                 $hasValidationTrick = property_exists($this, '__validationTrick') && $this->__validationTrick;
-
                 if (in_array(request()->method(), ['PUT', 'POST']) && !$hasValidationTrick) {
                     $this->attribute = "{$this->attribute}.*";
                     $this->__validationTrick = true;
@@ -82,6 +81,10 @@ class TranslatableFieldMixin
     public function rulesFor()
     {
         return function ($locale, $rules) {
+            if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
+                throw new Exception("Invalid locale specified ({$locale})");
+            }
+
             $this->rules['translatable'][$locale] = $rules;
             return $this;
         };
