@@ -27,6 +27,10 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
     - [ebess/advanced-nova-media-library](https://github.com/ebess/advanced-nova-media-library)
     - Or any library that uploads images/files using XHR
 
+## Limitations
+
+- The following methods can not be used: `displayUsing`, `resolveUsing`, `showOnCreating`, `fillUsing`
+
 ## Screenshots
 
 ![Detail View](./docs/detail.png)

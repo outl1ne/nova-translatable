@@ -73,9 +73,9 @@ class TranslatableFieldMixin
                         'value' => $value
                     ],
                 ]);
-                
+
                 /**
-                 * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e() 
+                 * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e()
                  * and it only accepts string, passing an array will cause a crash
                  */
                 if ($this instanceof Textarea) {
