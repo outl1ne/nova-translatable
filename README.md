@@ -85,15 +85,15 @@ It's possible to define locale specific validation rules.
 To do so, add the `->rulesFor()` on your field and the `HandlesTranslatable` trait to your Nova resource:
 
 ```php
+use OptimistDigital\NovaTranslatable\HandlesTranslatable;
+
 class Product extends Resource
 {
-    use \OptimistDigital\NovaTranslatable\HandlesTranslatable;
+    use HandlesTranslatable;
 
     public function fields(Request $request)
     {
         return [
-            ID::make()->sortable(),
-
             Text::make(__('Name'), 'name')
                 ->sortable()
                 ->translatable()
