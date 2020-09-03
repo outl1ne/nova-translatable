@@ -62,6 +62,21 @@ class TranslatableFieldMixin
                 return $this->resolveAttribute($resource, $attribute);
             });
 
+            $originalDisplayCallback = $this->displayCallback;
+            $this->displayUsing(function ($value, $resource, $attribute) use ($originalDisplayCallback) {
+                $this->displayCallback = $originalDisplayCallback;
+
+                /**
+                 * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e()
+                 * and it only accepts string, passing an array will cause a crash
+                 */
+                if ($this instanceof Textarea) {
+                    return parent::resolveForDisplay($resource, $attribute);
+                }
+
+                return $this->resolveForDisplay($resource, $attribute);
+            });
+
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
                 $realAttribute = FieldServiceProvider::normalizeAttribute($this->meta['translatable']['original_attribute'] ?? $attribute);
                 $value = $request->{$realAttribute};
