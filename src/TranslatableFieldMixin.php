@@ -21,8 +21,10 @@ class TranslatableFieldMixin
                 // Load value from either the model or from the given $value
                 if (isset($resource) && method_exists($resource, 'getTranslations')) {
                     $value = $resource->getTranslations($attribute);
-                } else {
-                    $value = data_get($resource, str_replace('->', '.', $attribute));
+                }
+
+                if (empty($value)) {
+                    $value = data_get($resource, str_replace('->', '.', $attribute)) ?? [];
                 }
 
                 try {
