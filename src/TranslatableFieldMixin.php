@@ -3,8 +3,6 @@
 namespace OptimistDigital\NovaTranslatable;
 
 use Exception;
-use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 
 class TranslatableFieldMixin
@@ -20,7 +18,13 @@ class TranslatableFieldMixin
 
                 // Load value from either the model or from the given $value
                 if (isset($resource) && method_exists($resource, 'getTranslations')) {
-                    $value = $resource->getTranslations($attribute);
+                    // In case a model has the HasTranslations trait, but some fields are wrapped
+                    // we must be prepared to get an Exception here
+                    try {
+                        $value = $resource->getTranslations($attribute);
+                    } catch (Exception $e) {
+                        $value = [];
+                    }
                 }
 
                 if (empty($value)) {
