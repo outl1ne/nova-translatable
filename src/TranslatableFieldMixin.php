@@ -88,7 +88,8 @@ class TranslatableFieldMixin
                 $value = $request->{$realAttribute};
                 $translations = is_string($value) ? (array) json_decode($value) : $value;
 
-                if (method_exists($model, 'setTranslations')) {
+                $isTranslatableAttribute = method_exists($model, 'isTranslatableAttribute') && $model->isTranslatableAttribute($realAttribute);
+                if ($isTranslatableAttribute && is_array($translations)) {
                     $model->setTranslations($realAttribute, $translations);
                 } else {
                     $model->{$realAttribute} = $translations;
