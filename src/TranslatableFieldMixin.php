@@ -79,6 +79,7 @@ class TranslatableFieldMixin
                  * and it only accepts string, passing an array will cause a crash
                  */
                 if ($this instanceof Textarea) {
+                    $this->displayCallback = null;
                     parent::resolveForDisplay($resource, $attribute);
                     return $value;
                 }
