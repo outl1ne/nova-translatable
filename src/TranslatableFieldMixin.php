@@ -13,7 +13,9 @@ class TranslatableFieldMixin
             $locales = FieldServiceProvider::getLocales($overrideLocales);
             $component = $this->component;
 
-            $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component) {
+            $originalResolveCallback = $this->resolveCallback;
+            $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component, $originalResolveCallback) {
+                $this->resolveCallback = $originalResolveCallback;
                 $attribute = FieldServiceProvider::normalizeAttribute($attribute);
 
                 // Load value from either the model or from the given $value
@@ -65,7 +67,7 @@ class TranslatableFieldMixin
                     $this->__validationTrick = true;
                 }
 
-                return $this->resolveAttribute($resource, $attribute);
+                return $this->resolve($resource, $attribute);
             });
 
             $originalDisplayCallback = $this->displayCallback;
