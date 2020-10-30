@@ -77,10 +77,12 @@ class TranslatableFieldMixin
                  * and it only accepts string, passing an array will cause a crash
                  */
                 if ($this instanceof Textarea) {
-                    return parent::resolveForDisplay($resource, $attribute);
+                    parent::resolveForDisplay($resource, $attribute);
+                    return $value;
                 }
 
-                return $this->resolveForDisplay($resource, $attribute);
+                $this->resolveForDisplay($resource, $attribute);
+                return $value;
             });
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) {
