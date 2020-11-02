@@ -81,7 +81,9 @@ class TranslatableFieldMixin
                 if ($this instanceof Textarea) {
                     $this->displayCallback = null;
                     parent::resolveForDisplay($resource, $attribute);
-                    return $value;
+
+                    if (is_string($value)) return $value;
+                    return collect(array_values((array) ($value ?? [])))->filter()->first() ?? '';
                 }
 
                 $this->resolveForDisplay($resource, $attribute);
