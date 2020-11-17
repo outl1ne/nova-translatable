@@ -118,4 +118,23 @@ class TranslatableFieldMixin
             return $this;
         };
     }
+
+    public function rulesForLocales()
+    {
+        return function ($locales, $callback) {
+            if (is_callable($locales)) $locales = call_user_func($locales);
+            if (!is_array($locales)) throw new Exception("Invalid array of locales specified ({$locales})");
+            foreach ($locales as $locale) {
+                if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
+                    throw new Exception("Invalid locale specified ({$locale})");
+                }
+
+                if (is_callable($callback)) {
+                    $this->rules['translatable'][$locale] = call_user_func($callback, $locale);
+                    continue;
+                }
+            }
+            return $this;
+        };
+    }
 }
