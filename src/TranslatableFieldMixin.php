@@ -109,31 +109,32 @@ class TranslatableFieldMixin
 
     public function rulesFor()
     {
-        return function ($locale, $rules) {
-            if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
-                throw new Exception("Invalid locale specified ({$locale})");
-            }
-
-            $this->rules['translatable'][$locale] = $rules;
-            return $this;
-        };
-    }
-
-    public function rulesForLocales()
-    {
-        return function ($locales, $callback) {
-            if (is_callable($locales)) $locales = call_user_func($locales);
-            if (!is_array($locales)) throw new Exception("Invalid array of locales specified ({$locales})");
-            foreach ($locales as $locale) {
+        return function ($locales, $rules) {
+            $setRule = function ($locale, $rules) {
                 if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
                     throw new Exception("Invalid locale specified ({$locale})");
                 }
 
-                if (is_callable($callback)) {
-                    $this->rules['translatable'][$locale] = call_user_func($callback, $locale);
-                    continue;
+                $this->rules['translatable'][$locale] = $rules;
+                return $this;
+            };
+
+            if (is_callable($locales)) $locales = call_user_func($locales);
+
+            // Array of locales or callable rules
+            if (is_array($locales) || is_callable($rules)) {
+                // Single locale with callable rules
+                if (!is_array($locales)) return $setRule($locales, call_user_func($rules, $locales));
+
+                foreach ($locales as $locale) {
+                    if (is_callable($rules)) $rules = call_user_func($rules, $locale);
+                    $setRule($locale, $rules);
                 }
+
+                return $this;
             }
+
+            $setRule($locales, $rules);
             return $this;
         };
     }
