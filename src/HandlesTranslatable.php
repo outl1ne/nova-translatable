@@ -46,6 +46,7 @@ trait HandlesTranslatable
 
         $replacements = array_filter([
             '{{resourceId}}' => str_replace(['\'', '"', ',', '\\'], '', $request->resourceId),
+            '{{locale}}' => $locale,
         ]);
 
         if (empty($replacements)) {
