@@ -83,7 +83,9 @@ Number::make('Population')
 
 It's possible to define locale specific validation rules.
 
-To do so, add the `->rulesFor()` on your field and the `HandlesTranslatable` trait to your Nova resource:
+To do so, add the `->rulesFor()` on your field and the `HandlesTranslatable` trait to your Nova resource.
+
+`->rulesFor` accepts `array|string|callable` locales and `array|callable` rules.
 
 ```php
 use OptimistDigital\NovaTranslatable\HandlesTranslatable;
@@ -101,13 +103,20 @@ class Product extends Resource
                 ->rules(['max:255'])
                 ->rulesFor('en', [
                     'required',
-                    'unique:products,sku->en,{{resourceId}}'
                 ])
+                ->rulesFor(['en', 'et'], function ($locale) {
+                    return ["unique:products,name->$locale{{resourceId}}"];
+                }),
+        ];
     }
 }
 ```
-
-In this example, the rule `max` will be applied for `name.*` and the rule `required` will be applied for `name.fr`.
+#### In this example, rules will be added to the following values
+```dotenv
+max: name.*
+required: name.en
+unique: name.en & name.et
+```
 
 ## Configuration
 

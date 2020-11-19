@@ -4,6 +4,7 @@ namespace OptimistDigital\NovaTranslatable;
 
 use Exception;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class TranslatableFieldMixin
 {
@@ -45,16 +46,19 @@ class TranslatableFieldMixin
                 } catch (Exception $e) {
                 }
 
-                $value = array_map(function ($val) {
-                    return !is_numeric($val) ? $val : (float) $val;
-                }, (array) $value);
+                if (!empty($value)) {
+                    $value = array_map(function ($val) {
+                        return !is_numeric($val) ? $val : (float) $val;
+                    }, (array) $value);
+                }
 
+                $request = app(NovaRequest::class);
                 $this->withMeta([
                     'translatable' => [
                         'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => $value
+                        'value' => $value ?: ($this->resolveDefaultValue($request) ?? ""),
                     ],
                 ]);
 
@@ -109,12 +113,32 @@ class TranslatableFieldMixin
 
     public function rulesFor()
     {
-        return function ($locale, $rules) {
-            if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
-                throw new Exception("Invalid locale specified ({$locale})");
+        return function ($locales, $rules) {
+            $setRule = function ($locale, $rules) {
+                if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
+                    throw new Exception("Invalid locale specified ({$locale})");
+                }
+
+                $this->rules['translatable'][$locale] = $rules;
+                return $this;
+            };
+
+            if (is_callable($locales)) $locales = call_user_func($locales);
+
+            // Array of locales or callable rules
+            if (is_array($locales) || is_callable($rules)) {
+                // Single locale with callable rules
+                if (!is_array($locales)) return $setRule($locales, call_user_func($rules, $locales));
+                foreach ($locales as $locale) {
+                    $_rules = $rules;
+                    if (is_callable($_rules)) $_rules = call_user_func($rules, $locale);
+                    $setRule($locale, $_rules);
+                }
+
+                return $this;
             }
 
-            $this->rules['translatable'][$locale] = $rules;
+            $setRule($locales, $rules);
             return $this;
         };
     }
