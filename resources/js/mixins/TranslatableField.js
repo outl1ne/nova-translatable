@@ -1,10 +1,12 @@
 export default {
-  data: () => ({
-    activeLocale: void 0,
-    originalFieldName: void 0,
-    fields: void 0,
-    isMounted: false,
-  }),
+  data: function () {
+    return {
+      activeLocale: void 0,
+      originalFieldName: void 0,
+      fields: this.getInitialFields(),
+      isMounted: false,
+    };
+  },
 
   beforeMount() {
     this.originalFieldName = this.field.name;
@@ -14,15 +16,14 @@ export default {
     const initialValues = this.getInitialValues();
 
     // Create fields
-    this.fields = {};
-    this.locales.forEach(
-      locale =>
-        (this.fields[locale.key] = {
-          ...this.field,
-          value: initialValues[locale.key] || '',
-          attribute: `${this.field.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
-          validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
-        })
+    this.locales.forEach(locale =>
+      _.merge(this.fields[locale.key], {
+        ...this.field,
+        extraAttributes: { ...(this.field.extraAttributes || {}) },
+        value: initialValues[locale.key] || '',
+        attribute: `${this.field.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
+        validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
+      })
     );
 
     // Listen to setAllLocale event
@@ -68,6 +69,24 @@ export default {
         initialValue[locale.key] = this.formatValue(this.field.translatable.value[locale.key] || '');
       }
       return initialValue;
+    },
+
+    getInitialFields() {
+      const locales = Object.keys(this.field.translatable.locales);
+      const fields = {};
+      locales.forEach(locale => {
+        fields[locale] = {
+          value: '',
+          readonly: '',
+          extraAttributes: {},
+          attribute: '',
+          component: '',
+          name: '',
+          nullable: '',
+          textAlign: '',
+        };
+      });
+      return fields;
     },
 
     setActiveLocale(newLocale) {
