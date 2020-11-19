@@ -4,6 +4,7 @@ namespace OptimistDigital\NovaTranslatable;
 
 use Exception;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class TranslatableFieldMixin
 {
@@ -45,16 +46,19 @@ class TranslatableFieldMixin
                 } catch (Exception $e) {
                 }
 
-                $value = array_map(function ($val) {
-                    return !is_numeric($val) ? $val : (float) $val;
-                }, (array) $value);
+                if (!empty($value)) {
+                    $value = array_map(function ($val) {
+                        return !is_numeric($val) ? $val : (float) $val;
+                    }, (array) $value);
+                }
 
+                $request = app(NovaRequest::class);
                 $this->withMeta([
                     'translatable' => [
                         'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => $value
+                        'value' => $value ?: $this->resolveDefaultValue($request) ?? "",
                     ],
                 ]);
 
