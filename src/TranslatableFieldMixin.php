@@ -58,7 +58,7 @@ class TranslatableFieldMixin
                         'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => $value ?: $this->resolveDefaultValue($request) ?? "",
+                        'value' => $value ?: ($this->resolveDefaultValue($request) ?? ""),
                     ],
                 ]);
 
