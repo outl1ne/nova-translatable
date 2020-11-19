@@ -129,10 +129,10 @@ class TranslatableFieldMixin
             if (is_array($locales) || is_callable($rules)) {
                 // Single locale with callable rules
                 if (!is_array($locales)) return $setRule($locales, call_user_func($rules, $locales));
-
                 foreach ($locales as $locale) {
-                    if (is_callable($rules)) $rules = call_user_func($rules, $locale);
-                    $setRule($locale, $rules);
+                    $_rules = $rules;
+                    if (is_callable($_rules)) $_rules = call_user_func($rules, $locale);
+                    $setRule($locale, $_rules);
                 }
 
                 return $this;
