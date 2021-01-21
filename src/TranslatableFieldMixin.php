@@ -20,7 +20,7 @@ class TranslatableFieldMixin
                 $attribute = FieldServiceProvider::normalizeAttribute($attribute);
 
                 // Load value from either the model or from the given $value
-                if (isset($resource) && method_exists($resource, 'getTranslations')) {
+                if (isset($resource) && (is_object($resource) || is_string($resource)) && method_exists($resource, 'getTranslations')) {
                     // In case a model has the HasTranslations trait, but some fields are wrapped
                     // we must be prepared to get an Exception here
                     try {
