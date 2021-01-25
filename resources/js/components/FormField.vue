@@ -68,39 +68,11 @@ export default {
 
     fill(formData) {
       try {
-        if (this.isFlexible) {
-          if (this.isFile) {
-            alert('Sorry, nova-translatable File and Image fields inside Flexible currently do not work.');
-            return;
-          }
+        if (this.isFlexible && this.isFile)
+          return alert('Sorry, nova-translatable File and Image fields inside Flexible currently do not work.');
 
-          const data = {};
-          const originalAttribute = this.field.translatable.original_attribute;
-
-          for (const locale of this.locales) {
-            const tempFormData = new FormData();
-            const field = this.fields[locale.key];
-            field.fill(tempFormData);
-
-            const formDataKeys = Array.from(tempFormData.keys());
-            for (const rawKey of formDataKeys) {
-              const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
-
-              if (key.endsWith(originalAttribute + `[${locale.key}]`)) {
-                const isArray = this.isKeyAnArray(rawKey);
-
-                if (isArray) {
-                  if (!data[locale.key]) data[locale.key] = [];
-                  data[locale.key].push(value);
-                } else {
-                  data[locale.key] = value;
-                }
-              }
-            }
-          }
-          formData.append(originalAttribute, JSON.stringify(data));
-          return;
-        }
+        const data = {};
+        const originalAttribute = this.field.translatable.original_attribute;
 
         for (const locale of this.locales) {
           const tempFormData = new FormData();
@@ -110,9 +82,23 @@ export default {
           const formDataKeys = Array.from(tempFormData.keys());
           for (const rawKey of formDataKeys) {
             const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
-            formData.append(key, value);
+
+            if (this.isFlexible || this.isSimpleRepeatable) {
+              if (this.isKeyAnArray(rawKey)) {
+                if (!data[locale.key]) data[locale.key] = [];
+                data[locale.key].push(value);
+              } else {
+                data[locale.key] = value;
+              }
+            } else {
+              formData.append(key, value);
+            }
           }
         }
+
+        if (this.isFlexible) formData.append(originalAttribute, JSON.stringify(data));
+        else if (this.isSimpleRepeatable) formData.append(this.field.attribute, JSON.stringify(data));
+        return;
       } catch (e) {
         console.error(e);
       }
