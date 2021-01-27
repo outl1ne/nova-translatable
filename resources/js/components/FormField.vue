@@ -96,8 +96,7 @@ export default {
           }
         }
 
-        if (this.isFlexible) formData.append(originalAttribute, JSON.stringify(data));
-        else if (this.isSimpleRepeatable) formData.append(this.field.attribute, JSON.stringify(data));
+        if (this.isFlexible || this.isSimpleRepeatable) formData.append(originalAttribute, JSON.stringify(data));
         return;
       } catch (e) {
         console.error(e);
