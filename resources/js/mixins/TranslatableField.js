@@ -57,6 +57,15 @@ export default {
       return this.$parent && this.$parent.field && this.$parent.field.component === 'nova-flexible-content';
     },
 
+    isSimpleRepeatable() {
+      return (
+        this.$parent &&
+        this.$parent.$parent &&
+        this.$parent.$parent.field &&
+        this.$parent.$parent.field.component === 'simple-repeatable'
+      );
+    },
+
     isFile() {
       return ['file-field'].includes(this.field.translatable.original_component);
     },
