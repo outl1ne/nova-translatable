@@ -119,6 +119,8 @@ class TranslatableFieldMixin
                     throw new Exception("Invalid locale specified ({$locale})");
                 }
 
+                if (!is_array($rules)) $rules = [$rules];
+
                 $this->rules['translatable'][$locale] = $rules;
                 return $this;
             };
