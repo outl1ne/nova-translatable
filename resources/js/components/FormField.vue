@@ -83,7 +83,7 @@ export default {
           for (const rawKey of formDataKeys) {
             const [key, value] = this.getKeyAndValue(rawKey, locale, tempFormData);
 
-            if (this.isFlexible || this.isSimpleRepeatable) {
+            if ((this.isFlexible && key.endsWith(originalAttribute + `[${locale.key}]`)) || this.isSimpleRepeatable) {
               if (this.isKeyAnArray(rawKey)) {
                 if (!data[locale.key]) data[locale.key] = [];
                 data[locale.key].push(value);
