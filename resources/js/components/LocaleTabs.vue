@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ['locales', 'activeLocale', 'detail', 'errors', 'errorAttributes'],
+  props: ['locales', 'activeLocale', 'detail', 'errors', 'errorAttributes', 'localesWithErrors'],
   computed: {
     wrapperClasses() {
       if (this.detail) return ['pt-4'];
@@ -33,9 +33,12 @@ export default {
       return [novaLocale, ...this.locales.filter(({ key }) => key !== Nova.config.locale)];
     },
   },
+
   methods: {
     hasError(locale) {
+      if (Array.isArray(this.localesWithErrors) && this.localesWithErrors.includes(locale)) return true;
       if (!this.errors || !this.errorAttributes) return false;
+
       const errorAttribute = this.errorAttributes[locale];
       return this.errors.has(errorAttribute);
     },
