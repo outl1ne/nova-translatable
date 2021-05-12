@@ -10,13 +10,13 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "laravel-mix": "^6.0.19",
-    "laravel-nova": "^1.11.1",
+    "laravel-nova": "^1.12.3",
     "postcss": "^8.2.15",
     "prettier": "^2.3.0",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.32.12",
     "sass-loader": "^11.1.0",
-    "vue-loader": "^15.9.7",
+    "vue-loader": "^16.2.0",
     "vue-template-compiler": "^2.6.12"
   },
   "dependencies": {
