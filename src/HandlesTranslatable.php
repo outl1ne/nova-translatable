@@ -2,6 +2,7 @@
 
 namespace OptimistDigital\NovaTranslatable;
 
+use Illuminate\Support\Arr;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait HandlesTranslatable
@@ -25,10 +26,16 @@ trait HandlesTranslatable
             }
 
             foreach ($attributeRules['translatable'] as $locale => $localeRules) {
+                $pos = strrpos($attribute, '.*');
+                $newRuleAttribute = substr_replace($attribute, '', $pos, strlen('.*'));
+                $newRuleAtrribute = "{$newRuleAttribute}.{$locale}";
+
                 // We copy the locale rule into the rules array
                 // i.e. ['name.fr' => ['required']]
-                $rules[str_replace('.*', '', $attribute) . ".{$locale}"] =
-                    array_merge(collect($attributeRules)->except('translatable')->toArray(), $localeRules);
+                $rules[$newRuleAtrribute] = array_merge(
+                    Arr::except($attributeRules, ['translatable']),
+                    $localeRules
+                );
 
                 // We unset the translatable locale entry since we copy the rule into the rules array
                 unset($rules[$attribute]['translatable'][$locale]);
