@@ -52,13 +52,16 @@ class TranslatableFieldMixin
                     }, (array) $value);
                 }
 
+                // Nova 2.9 support
                 $request = app(NovaRequest::class);
+                $defaultValue = method_exists($this, 'resolveDefaultValue') ? $this->resolveDefaultValue($request) : '';
+
                 $this->withMeta([
                     'translatable' => [
                         'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
-                        'value' => $value ?: ($this->resolveDefaultValue($request) ?? ""),
+                        'value' => $value ?: $defaultValue,
                     ],
                 ]);
 
