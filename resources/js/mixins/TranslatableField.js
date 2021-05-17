@@ -75,7 +75,8 @@ export default {
     getInitialValues() {
       const initialValue = {};
       for (const locale of this.locales) {
-        initialValue[locale.key] = this.formatValue(this.field.translatable.value[locale.key] || '');
+        const localeValue = (this.field.translatable.value && this.field.translatable.value[locale.key]) || '';
+        initialValue[locale.key] = this.formatValue(localeValue);
       }
       return initialValue;
     },
