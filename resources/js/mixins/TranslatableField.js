@@ -40,13 +40,17 @@ export default {
 
   computed: {
     locales() {
-      return Object.keys(this.field.translatable.locales)
-        .sort((a, b) => {
+      let localeKeys = Object.keys(this.field.translatable.locales);
+
+      if (this.field.translatable.prioritize_nova_locale) {
+        localeKeys = localeKeys.sort((a, b) => {
           if (a === Nova.config.locale && b !== Nova.config.locale) return -1;
           if (a !== Nova.config.locale && b === Nova.config.locale) return 1;
           return 0;
-        })
-        .map(key => ({ key, name: this.field.translatable.locales[key] }));
+        });
+      }
+
+      return localeKeys.map(key => ({ key, name: this.field.translatable.locales[key] }));
     },
 
     fieldValueMustBeAnObject() {

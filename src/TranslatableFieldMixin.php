@@ -10,7 +10,7 @@ class TranslatableFieldMixin
 {
     public function translatable()
     {
-        return function ($overrideLocales = []) {
+        return function ($overrideLocales = [], $options = []) {
             $locales = FieldServiceProvider::getLocales($overrideLocales);
             $component = $this->component;
 
@@ -56,12 +56,17 @@ class TranslatableFieldMixin
                 $request = app(NovaRequest::class);
                 $defaultValue = method_exists($this, 'resolveDefaultValue') ? $this->resolveDefaultValue($request) : '';
 
+                $prioritizeNovaLocale = isset($options['prioritizeNovaLocale'])
+                    ? $options['prioritizeNovaLocale']
+                    : config('nova-translatable.prioritize_nova_locale', true);
+
                 $this->withMeta([
                     'translatable' => [
                         'original_attribute' => $this->attribute,
                         'original_component' => $component,
                         'locales' => $locales,
                         'value' => $value ?: $defaultValue,
+                        'prioritize_nova_locale' => $prioritizeNovaLocale,
                     ],
                 ]);
 
