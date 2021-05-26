@@ -18,7 +18,7 @@
         :errors="errors"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
         :show-help-text="showHelpText"
-      ></component>
+      />
     </div>
   </div>
 </template>
