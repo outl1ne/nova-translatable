@@ -27,7 +27,11 @@ trait HandlesTranslatable
 
             foreach ($attributeRules['translatable'] as $locale => $localeRules) {
                 $pos = strrpos($attribute, '.*');
-                $newRuleAttribute = substr_replace($attribute, '', $pos, strlen('.*'));
+                if($pos !== false) {
+                    $newRuleAttribute = substr_replace($attribute, '', $pos, strlen('.*'));
+                } else {
+                    $newRuleAttribute = $attribute;
+                }
                 $newRuleAtrribute = "{$newRuleAttribute}.{$locale}";
 
                 // We copy the locale rule into the rules array
