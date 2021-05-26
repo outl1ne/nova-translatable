@@ -1,6 +1,6 @@
 <template>
   <div v-show="locales.length > 1" class="flex select-none" :class="wrapperClasses">
-    <div class="ml-auto">
+    <div class="ml-auto" :class="listClasses">
       <a
         v-for="locale in locales"
         :key="locale.key"
@@ -20,11 +20,16 @@
 
 <script>
 export default {
-  props: ['locales', 'activeLocale', 'detail', 'errors', 'errorAttributes', 'localesWithErrors'],
+  props: ['locales', 'activeLocale', 'displayType', 'detail', 'errors', 'errorAttributes', 'localesWithErrors'],
   computed: {
     wrapperClasses() {
       if (this.detail) return ['pt-4'];
       return ['pt-4', 'px-8'];
+    },
+
+    listClasses() {
+      if (this.displayType === 'column') return ['flex', 'flex-col'];
+      return [];
     },
   },
 

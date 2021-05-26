@@ -4,6 +4,7 @@
       :detail="true"
       :locales="locales"
       :active-locale="activeLocale"
+      :display-type="field.translatable.display_type"
       @tabClick="locale => (activeLocale = locale)"
       @doubleClick="setAllLocale"
     />

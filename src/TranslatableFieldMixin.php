@@ -60,6 +60,10 @@ class TranslatableFieldMixin
                     ? $options['prioritizeNovaLocale']
                     : config('nova-translatable.prioritize_nova_locale', true);
 
+                $displayType = isset($options['displayType'])
+                    ? $options['displayType']
+                    : config('nova-translatable.display_type', 'row');
+
                 $this->withMeta([
                     'translatable' => [
                         'original_attribute' => $this->attribute,
@@ -67,6 +71,7 @@ class TranslatableFieldMixin
                         'locales' => $locales,
                         'value' => $value ?: $defaultValue,
                         'prioritize_nova_locale' => $prioritizeNovaLocale,
+                        'display_type' => $displayType,
                     ],
                 ]);
 

@@ -3,6 +3,7 @@
     <locale-tabs
       :locales="locales"
       :active-locale="activeLocale"
+      :display-type="field.translatable.display_type"
       :errors="errors"
       :error-attributes="errorAttributes"
       @tabClick="setActiveLocale"

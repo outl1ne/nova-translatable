@@ -22,4 +22,12 @@ return [
      */
     'prioritize_nova_locale' => true,
 
+
+    /**
+     * Defines the display type for the translatable tabs.
+     *
+     * Available options are: 'row', 'column'
+     */
+    'display_type' => 'row',
+
 ];
