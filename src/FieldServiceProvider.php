@@ -24,6 +24,8 @@ class FieldServiceProvider extends ServiceProvider
 
         // Register mixin
         Field::mixin(new TranslatableFieldMixin);
+
+        $this->mergeConfigFrom(__DIR__ . '/../config/nova-translatable.php', 'nova-translatable');
     }
 
     protected static function isValidLocaleArray($localeArray)
