@@ -1,4 +1,6 @@
 export default {
+  props: ['uniqueId'],
+
   data: function () {
     return {
       activeLocale: void 0,
@@ -25,17 +27,19 @@ export default {
         validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
       })
     );
-
-    // Listen to setAllLocale event
-    Nova.$on('nova-translatable@setAllLocale', this.setActiveLocale);
   },
 
   mounted() {
     this.isMounted = true;
+
+    // Listen to setAllLocale event
+    if (this.uniqueId) Nova.$on(this.getAllLocalesEventName(this.uniqueId), this.setActiveLocale);
+    Nova.$on(this.getAllLocalesEventName(), this.setActiveLocale);
   },
 
   destroyed() {
-    Nova.$off('nova-translatable@setAllLocale', this.setActiveLocale);
+    if (this.uniqueId) Nova.$off(this.getAllLocalesEventName(this.uniqueId));
+    Nova.$off(this.getAllLocalesEventName(), this.setActiveLocale);
   },
 
   computed: {
@@ -108,7 +112,7 @@ export default {
     },
 
     setAllLocale(newLocale) {
-      Nova.$emit('nova-translatable@setAllLocale', newLocale);
+      Nova.$emit(this.allLocalesEventName, newLocale);
     },
 
     removeBottomBorder() {
@@ -128,6 +132,11 @@ export default {
       }
 
       return formattedValue;
+    },
+
+    getAllLocalesEventName(uniqueId = void 0) {
+      const id = uniqueId ?? void 0;
+      return id !== void 0 ? `nova-translatable-${id}@setAllLocale` : 'nova-translatable@setAllLocale';
     },
   },
 };
