@@ -37,9 +37,9 @@ export default {
     Nova.$on(this.getAllLocalesEventName(), this.setActiveLocale);
   },
 
-  destroyed() {
+  beforeDestroy() {
     if (this.uniqueId) Nova.$off(this.getAllLocalesEventName(this.uniqueId));
-    Nova.$off(this.getAllLocalesEventName(), this.setActiveLocale);
+    Nova.$off(this.getAllLocalesEventName());
   },
 
   computed: {
