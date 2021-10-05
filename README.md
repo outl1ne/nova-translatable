@@ -111,6 +111,23 @@ class Product extends Resource
     }
 }
 ```
+
+### Fields
+TranslaBelongsToMany
+
+#### Make the translation available in the intermediate table
+
+````php
+TranslaBelongsToMany::make(__('admin.Product'), 'product_attributes', '\App\Nova\Product')
+      ->fields(function () {
+          return [
+              Text::make(__('admin.Text'), 'text')
+                  ->rules('required', 'min:2')
+                  ->translatable(),
+          ];
+      })
+```
+
 #### In this example, rules will be added to the following values
 ```dotenv
 max: name.*
