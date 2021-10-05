@@ -128,6 +128,10 @@ You can define default locales for all the `translatable` fields in the config f
 php artisan vendor:publish --tag="nova-translatable-config"
 ```
 
+### Fill other locales from config option
+
+The configuration option `fill_other_locales_from` allows you to pre-fill other locales from just one locale. This requires the resources to also have the `HandlesTranslatable` trait.
+
 ## Edge cases
 
 #### BelongsToMany allowDuplicateRelations corner-case
@@ -141,7 +145,3 @@ When using this field inside a BelongsToMany as a pivot field with `->allowDupli
 ## License
 
 This project is open-sourced software licensed under the [MIT license](LICENSE.md).
-
-```
-
-```
