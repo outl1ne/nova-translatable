@@ -112,23 +112,8 @@ class Product extends Resource
 }
 ```
 
-### Fields
-TranslaBelongsToMany
-
-#### Make the translation available in the intermediate table
-
-````php
-TranslaBelongsToMany::make(__('admin.Product'), 'product_attributes', '\App\Nova\Product')
-      ->fields(function () {
-          return [
-              Text::make(__('admin.Text'), 'text')
-                  ->rules('required', 'min:2')
-                  ->translatable(),
-          ];
-      })
-```
-
 #### In this example, rules will be added to the following values
+
 ```dotenv
 max: name.*
 required: name.en
@@ -143,6 +128,12 @@ You can define default locales for all the `translatable` fields in the config f
 php artisan vendor:publish --tag="nova-translatable-config"
 ```
 
+## Edge cases
+
+#### BelongsToMany allowDuplicateRelations corner-case
+
+When using this field inside a BelongsToMany as a pivot field with `->allowDuplicateRelations()` and you want to filter out exact matches using the `NotExactlyAttached` rule, use the `BelongsToManyTranslatable` field instead of the regular `BelongsToMany`.
+
 ## Credits
 
 - [Tarvo Reinpalu](https://github.com/Tarpsvo)
@@ -150,3 +141,7 @@ php artisan vendor:publish --tag="nova-translatable-config"
 ## License
 
 This project is open-sourced software licensed under the [MIT license](LICENSE.md).
+
+```
+
+```

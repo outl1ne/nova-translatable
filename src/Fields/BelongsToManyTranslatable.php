@@ -3,9 +3,9 @@
 namespace OptimistDigital\NovaTranslatable\Fields;
 
 use Laravel\Nova\Fields\BelongsToMany;
-use OptimistDigital\NovaTranslatable\Rules\TranslaNotExactlyAttached;
+use OptimistDigital\NovaTranslatable\Rules\NotExactlyAttachedTranslatable;
 
-class TranslaBelongsToMany extends BelongsToMany
+class BelongsToManyTranslatable extends BelongsToMany
 {
     /**
      * Set allow same relation rules.
@@ -16,7 +16,7 @@ class TranslaBelongsToMany extends BelongsToMany
     {
         return $this->creationRules(function ($request) {
             return [
-                new TranslaNotExactlyAttached($request, $request->findModelOrFail()),
+                new NotExactlyAttachedTranslatable($request, $request->findModelOrFail()),
             ];
         });
     }

@@ -13,6 +13,7 @@ class TranslatableFieldMixin
         return function ($overrideLocales = [], $options = []) {
             $locales = FieldServiceProvider::getLocales($overrideLocales);
             $component = $this->component;
+            $this->__translatable = true;
 
             $originalResolveCallback = $this->resolveCallback;
             $this->resolveUsing(function ($value, $resource, $attribute) use ($locales, $component, $originalResolveCallback) {
