@@ -30,4 +30,14 @@ return [
      */
     'display_type' => 'row',
 
+
+    /**
+     * If set to a locale key, the translatable fields will automatically fill other
+     * locales of the field's value when saving the field from the defined "default"
+     * locale.
+     *
+     * Set to locale key (`en`, `ru`, etc) or null to enable/disable.
+     */
+    'fill_other_locales_from' => null,
+
 ];

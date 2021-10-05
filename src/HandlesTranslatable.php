@@ -3,6 +3,7 @@
 namespace OptimistDigital\NovaTranslatable;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 trait HandlesTranslatable
@@ -68,5 +69,27 @@ trait HandlesTranslatable
                     : $rule;
             })->all();
         })->all();
+    }
+
+    public static function validatorForCreation(NovaRequest $request)
+    {
+        // Get rules before $request->all() call
+        $rules = static::rulesForCreation($request);
+        return Validator::make($request->all(), $rules)
+            ->after(function ($validator) use ($request) {
+                static::afterValidation($request, $validator);
+                static::afterCreationValidation($request, $validator);
+            });
+    }
+
+    public static function validatorForUpdate(NovaRequest $request, $resource = null)
+    {
+        // Get rules before $request->all() call
+        $rules = static::rulesForUpdate($request, $resource);
+        return Validator::make($request->all(), $rules)
+            ->after(function ($validator) use ($request) {
+                static::afterValidation($request, $validator);
+                static::afterUpdateValidation($request, $validator);
+            });
     }
 }
