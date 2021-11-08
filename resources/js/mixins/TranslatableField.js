@@ -112,7 +112,7 @@ export default {
     },
 
     setAllLocale(newLocale) {
-      Nova.$emit(this.allLocalesEventName, newLocale);
+      Nova.$emit(this.getAllLocalesEventName(), newLocale);
     },
 
     removeBottomBorder() {
