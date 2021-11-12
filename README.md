@@ -24,8 +24,7 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 - `Image` and `File`
   - Workarounds:
     - [optimistdigital/nova-media-field](https://github.com/optimistdigital/nova-media-field)
-    - [ebess/advanced-nova-media-library](https://github.com/ebess/advanced-nova-media-library)
-    - Or any library that uploads images/files using XHR
+    - or any library that uploads images/files using XHR
 
 ## Limitations
 
