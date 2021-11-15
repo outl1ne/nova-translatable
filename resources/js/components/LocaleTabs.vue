@@ -3,6 +3,7 @@
     <div class="ml-auto" :class="listClasses">
       <a
         v-for="locale in locales"
+        v-if="displayType != 'none'"
         :key="locale.key"
         class="ml-3 cursor-pointer font-bold text-80 text-sm"
         :class="{
