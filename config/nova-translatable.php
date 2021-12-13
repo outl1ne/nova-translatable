@@ -26,10 +26,16 @@ return [
     /**
      * Defines the display type for the translatable tabs.
      *
-     * Available options are: 'row', 'column'
+     * Available options are: 'row', 'column', 'none'
      */
     'display_type' => 'row',
 
+    /**
+     * Defines the display type for the translatable select.
+     *
+     * Available options are: 'left-absolute', 'left-static', 'right-absolute', 'right-static
+     */
+    'locale_select.display_type' => 'right-absolute',
 
     /**
      * If set to a locale key, the translatable fields will automatically fill other
