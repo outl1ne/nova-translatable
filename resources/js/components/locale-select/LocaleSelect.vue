@@ -1,5 +1,5 @@
 <template>
-  <div class="locale-select-field w-1/6" :class="selectClasses">
+  <div class="locale-select-field w-1/6 z-10" :class="selectClasses">
     <!-- Select Input Field -->
     <select-control
       @change="event => $emit('localeChanged', event.target.value)"

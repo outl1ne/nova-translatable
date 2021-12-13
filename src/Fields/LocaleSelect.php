@@ -13,9 +13,9 @@ class LocaleSelect extends Field
 
     protected $translatableMeta = [];
 
-    public function __construct($name, $attribute = null, callable $resolveCallback = null)
+    public function __construct()
     {
-        parent::__construct($name, $attribute, $resolveCallback);
+        parent::__construct(null, null, null);
 
         $this->translatableMeta = [
             'locales' => FieldServiceProvider::getLocales(),
