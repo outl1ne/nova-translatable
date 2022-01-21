@@ -49,7 +49,7 @@ class TranslatableFieldMixin
 
                 if (!empty($value)) {
                     $value = array_map(function ($val) {
-                        return !is_numeric($val) || $val[0] === '0' ? $val : (float) $val;
+                        return !is_numeric($val) || (is_string($val) && $val[0] === '0') ? $val : (float) $val;
                     }, (array) $value);
                 }
 
