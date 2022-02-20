@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.1.0",
+    "php": "^8.0",
     "laravel/nova": "^2.9 || ^3.0",
     "spatie/laravel-translatable": "^4.0 || ^5.0"
   },
