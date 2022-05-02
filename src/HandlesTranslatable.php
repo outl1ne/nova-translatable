@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaTranslatable;
+namespace Outl1ne\NovaTranslatable;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;

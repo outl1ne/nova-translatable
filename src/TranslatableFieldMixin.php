@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\NovaTranslatable;
+namespace Outl1ne\NovaTranslatable;
 
 use Exception;
 use Laravel\Nova\Fields\Textarea;

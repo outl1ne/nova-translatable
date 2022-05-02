@@ -1,5 +1,5 @@
 {
-  "name": "optimistdigital/nova-translatable",
+  "name": "outl1ne/nova-translatable",
   "description": "A laravel-translatable extension for Laravel Nova.",
   "keywords": [
     "laravel",
@@ -22,19 +22,19 @@
   ],
   "license": "MIT",
   "require": {
-    "php": ">=7.1.0",
-    "laravel/nova": "^2.9 || ^3.0",
+    "php": ">=8.0",
+    "laravel/nova": "^4.0",
     "spatie/laravel-translatable": "^4.0 || ^5.0 || ^6.0"
   },
   "autoload": {
     "psr-4": {
-      "OptimistDigital\\NovaTranslatable\\": "src/"
+      "Outl1ne\\NovaTranslatable\\": "src/"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "OptimistDigital\\NovaTranslatable\\FieldServiceProvider"
+        "Outl1ne\\NovaTranslatable\\FieldServiceProvider"
       ]
     }
   },

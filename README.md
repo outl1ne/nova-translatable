@@ -1,7 +1,7 @@
 # Nova Translatable
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/optimistdigital/nova-translatable.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-translatable)
-[![Total Downloads](https://img.shields.io/packagist/dt/optimistdigital/nova-translatable.svg?style=flat-square)](https://packagist.org/packages/optimistdigital/nova-translatable)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/outl1ne/nova-translatable.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-translatable)
+[![Total Downloads](https://img.shields.io/packagist/dt/outl1ne/nova-translatable.svg?style=flat-square)](https://packagist.org/packages/outl1ne/nova-translatable)
 
 This [Laravel Nova](https://nova.laravel.com) allows you to make any input field `spatie/laravel-translatable` compatible and localisable.
 
@@ -17,13 +17,13 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 - **Simple to implement** with minimal code changes (after `spatie/laravel-translatable` support)
 - Locale tabs to switch between different locale values of the same field
 - **Double click** on a tab to switch all fields to that locale
-- Supports [nova-settings](https://github.com/optimistdigital/nova-settings) package
+- Supports [nova-settings](https://github.com/outl1ne/nova-settings) package
 
 ## Known non-working fields
 
 - `Image` and `File`
   - Workarounds:
-    - [optimistdigital/nova-media-field](https://github.com/optimistdigital/nova-media-field)
+    - [outl1ne/nova-media-field](https://github.com/outl1ne/nova-media-field)
     - or any library that uploads images/files using XHR
 
 ## Limitations
@@ -49,7 +49,7 @@ Install the package in a Laravel Nova project via Composer:
 
 ```bash
 # Install nova-translatable
-composer require optimistdigital/nova-translatable
+composer require outl1ne/nova-translatable
 
 # Publish configuration (optional, but useful for setting default locales)
 php artisan vendor:publish --tag="nova-translatable-config"
@@ -87,7 +87,7 @@ To do so, add the `->rulesFor()` on your field and the `HandlesTranslatable` tra
 `->rulesFor` accepts `array|string|callable` locales and `array|callable` rules.
 
 ```php
-use OptimistDigital\NovaTranslatable\HandlesTranslatable;
+use Outl1ne\NovaTranslatable\HandlesTranslatable;
 
 class Product extends Resource
 {
@@ -133,7 +133,7 @@ The configuration option `fill_other_locales_from` allows you to pre-fill other 
 
 ### One select for all fields on a page
 
-If you don't want to display the locale select next to each field, you can set the `display_type` to `none` and add a `OptimistDigital\NovaTranslatable\Fields\LocaleSelect` field to your Nova resource. This will render a single select for all fields.
+If you don't want to display the locale select next to each field, you can set the `display_type` to `none` and add a `Outl1ne\NovaTranslatable\Fields\LocaleSelect` field to your Nova resource. This will render a single select for all fields.
 
 ## Edge cases
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\NovaTranslatable\Fields;
+namespace Outl1ne\NovaTranslatable\Fields;
 
 use Laravel\Nova\Fields\Field;
-use OptimistDigital\NovaTranslatable\FieldServiceProvider;
+use Outl1ne\NovaTranslatable\FieldServiceProvider;
 
 class LocaleSelect extends Field
 {
