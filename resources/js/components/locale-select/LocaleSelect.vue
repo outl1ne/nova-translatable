@@ -1,13 +1,13 @@
 <template>
   <div class="locale-select-field w-1/6 z-10" :class="selectClasses">
     <!-- Select Input Field -->
-    <select-control
+    <SelectControl
       @change="event => $emit('localeChanged', event.target.value)"
       :value="activeLocale"
       class="w-full form-control form-select"
       :options="localesOptions"
     >
-    </select-control>
+    </SelectControl>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="translatable-field" ref="main">
-    <locale-tabs
+    <LocaleTabs
       :detail="true"
       :locales="locales"
       :active-locale="activeLocale"

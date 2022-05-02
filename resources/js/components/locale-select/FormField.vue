@@ -1,5 +1,5 @@
 <template>
-  <locale-select
+  <LocaleSelect
     :detail="false"
     :active-locale="activeLocale"
     :locales="locales"

@@ -1,9 +1,8 @@
 <template>
   <div v-show="locales.length > 1" class="flex select-none" :class="wrapperClasses">
-    <div class="ml-auto" :class="listClasses">
+    <div class="ml-auto" :class="listClasses" v-if="displayType != 'none'">
       <a
         v-for="locale in locales"
-        v-if="displayType != 'none'"
         :key="locale.key"
         class="ml-3 cursor-pointer font-bold text-80 text-sm"
         :class="{

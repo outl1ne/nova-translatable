@@ -3,7 +3,7 @@
     :is="'index-' + field.translatable.original_component"
     :field="fields[activeLocale]"
     :resource-name="resourceName"
-  ></component>
+  />
 </template>
 
 <script>
