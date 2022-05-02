@@ -4,10 +4,10 @@
       <a
         v-for="locale in locales"
         :key="locale.key"
-        class="ml-3 cursor-pointer font-bold text-80 text-sm"
+        class="locale-tag ml-3 cursor-pointer font-bold text-80 text-sm"
         :class="{
-          'text-primary-500 border-b border-primary-500': locale.key === activeLocale,
-          'text-danger border-danger': hasError(locale.key),
+          '-active': locale.key === activeLocale,
+          '-error': hasError(locale.key),
         }"
         @click="() => $emit('tabClick', locale.key)"
         @dblclick="() => $emit('doubleClick', locale.key)"
@@ -50,5 +50,23 @@ export default {
 .nova-translatable-locale-tabs {
   position: relative;
   z-index: 2;
+
+  .locale-tag {
+    border-bottom: 2px solid transparent;
+
+    &.-active {
+      color: rgba(var(--colors-primary-500));
+      border-color: rgba(var(--colors-primary-500));
+    }
+
+    &.-error {
+      color: rgba(var(--colors-red-500));
+      border-color: rgba(var(--colors-red-500));
+
+      &.-active {
+        color: rgba(var(--colors-primary-500));
+      }
+    }
+  }
 }
 </style>
