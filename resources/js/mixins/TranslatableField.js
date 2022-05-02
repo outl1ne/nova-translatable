@@ -19,7 +19,7 @@ export default {
 
     // Create fields
     this.locales.forEach(locale =>
-      _.merge(this.fields[locale.key], {
+      Object.assign(this.fields[locale.key], {
         ...this.field,
         extraAttributes: { ...(this.field.extraAttributes || {}) },
         value: initialValues[locale.key] || '',
@@ -123,7 +123,7 @@ export default {
     formatValue(value) {
       let formattedValue = value || '';
 
-      if (this.fieldValueMustBeAnObject && !_.isObject(formattedValue)) {
+      if (this.fieldValueMustBeAnObject && typeof formattedValue === 'string') {
         try {
           formattedValue = JSON.parse(formattedValue || '{}');
         } catch (e) {

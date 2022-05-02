@@ -1,5 +1,5 @@
 <template>
-  <div class="translatable-field" ref="main">
+  <div class="translatable-field pt-2" ref="main">
     <LocaleTabs
       :locales="locales"
       :active-locale="activeLocale"
@@ -116,3 +116,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.translatable-field:not(:last-child) {
+  .field-wrapper {
+    border-style: solid !important;
+  }
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="translatable-field" ref="main">
+  <div class="translatable-field pt-2 border-t border-gray-100 dark:border-gray-700" ref="main">
     <LocaleTabs
       :detail="true"
       :locales="locales"
@@ -16,7 +16,7 @@
         :field="fields[locale.key]"
         :class="{ 'remove-bottom-border': removeBottomBorder() }"
         :resource-name="resourceName"
-      ></component>
+      />
     </div>
   </div>
 </template>
@@ -31,3 +31,11 @@ export default {
   props: ['resourceName', 'resourceId', 'resource', 'field'],
 };
 </script>
+
+<style lang="scss" scoped>
+.translatable-field:not(:last-child) {
+  .flex.border-t {
+    border-style: none !important;
+  }
+}
+</style>

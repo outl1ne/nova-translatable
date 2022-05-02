@@ -19,8 +19,8 @@ class FieldServiceProvider extends ServiceProvider
 
         // Serve asset(s)
         Nova::serving(function (ServingNova $event) {
-            Nova::script('translatable-field', __DIR__ . '/../dist/js/translatable-field.js');
-            Nova::script('locale-select-field', __DIR__ . '/../dist/js/locale-select-field.js');
+            Nova::script('nova-translatable', __DIR__ . '/../dist/nova-translatable.js');
+            Nova::script('nova-translatable-select-field', __DIR__ . '/../dist/nova-translatable-select-field.js');
         });
 
         // Register mixin
