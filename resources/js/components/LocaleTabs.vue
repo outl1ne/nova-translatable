@@ -1,5 +1,9 @@
 <template>
-  <div v-show="locales.length > 1" class="flex select-none" :class="wrapperClasses" style="margin-bottom: -1rem">
+  <div
+    v-show="locales.length > 1"
+    class="nova-translatable-locale-tabs flex select-none"
+    :class="{ 'px-8': !this.detail }"
+  >
     <div class="ml-auto" :class="listClasses" v-if="displayType != 'none'">
       <a
         v-for="locale in locales"
@@ -22,12 +26,6 @@
 export default {
   props: ['locales', 'activeLocale', 'displayType', 'detail', 'errors', 'errorAttributes', 'localesWithErrors'],
   computed: {
-    wrapperClasses() {
-      let classes = ['nova-translatable-locale-tabs', 'pt-4'];
-      if (!this.detail) classes.push('px-8');
-      return classes;
-    },
-
     listClasses() {
       if (this.displayType === 'column') return ['flex', 'flex-col'];
       return [];
@@ -50,6 +48,7 @@ export default {
 .nova-translatable-locale-tabs {
   position: relative;
   z-index: 2;
+  padding-top: 0.25rem;
 
   .locale-tag {
     border-bottom: 2px solid transparent;

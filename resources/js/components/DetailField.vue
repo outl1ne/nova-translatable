@@ -1,5 +1,5 @@
 <template>
-  <div class="translatable-field pt-2 border-t border-gray-100 dark:border-gray-700" ref="main">
+  <div class="translatable-field pt-2 border-t border-gray-100 dark:border-gray-700 -mx-6 px-6" ref="main">
     <LocaleTabs
       :detail="true"
       :locales="locales"

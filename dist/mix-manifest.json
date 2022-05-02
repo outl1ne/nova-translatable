@@ -1,4 +1,4 @@
 {
-    "/js/translatable-field.js": "/js/translatable-field.js",
-    "/js/locale-select-field.js": "/js/locale-select-field.js"
+    "/nova-translatable.js": "/nova-translatable.js",
+    "/nova-translatable-select-field.js": "/nova-translatable-select-field.js"
 }
