@@ -109,6 +109,18 @@ export default {
 
     setActiveLocale(newLocale) {
       this.activeLocale = newLocale;
+
+      this.refreshCodeMirror();
+    },
+
+    refreshCodeMirror() {
+      setTimeout(() => {
+
+        const cmList = this.$refs.main.querySelectorAll('.CodeMirror');
+        if (!cmList.length) return;
+
+        cmList.forEach(cm => cm.CodeMirror.refresh());
+      }, 1);
     },
 
     setAllLocale(newLocale) {
