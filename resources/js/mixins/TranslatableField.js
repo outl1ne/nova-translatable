@@ -115,6 +115,7 @@ export default {
 
     refreshCodeMirror() {
       setTimeout(() => {
+        if (!this.$refs.main) return;
 
         const cmList = this.$refs.main.querySelectorAll('.CodeMirror');
         if (!cmList.length) return;

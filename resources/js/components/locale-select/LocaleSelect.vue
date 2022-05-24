@@ -1,9 +1,9 @@
 <template>
-  <div class="locale-select-field w-1/6 z-10" :class="selectClasses">
+  <div class="locale-select-field w-1/6 z-10" :style="selectStyles">
     <!-- Select Input Field -->
     <SelectControl
-      @change="event => $emit('localeChanged', event.target.value)"
-      :value="activeLocale"
+      @change="value => $emit('localeChanged', value)"
+      :selected="activeLocale"
       class="w-full form-control form-select"
       :options="localesOptions"
     >
@@ -23,19 +23,27 @@ export default {
         };
       });
     },
-    selectClasses() {
-      const classes = this.detail ? 'px-4' : 'p-4';
+    selectStyles() {
+      const styles = {};
+      styles.padding = this.detail ? '1rem 0 1rem 0' : '1rem';
 
       switch (this.displayType) {
         case 'left-static':
-          return classes + ' mr-auto ml-left';
+          styles.marginRight = 'auto';
+          return styles;
         case 'right-static':
-          return classes + ' mr-0 ml-auto';
+          styles.marginRight = '0';
+          styles.marginLeft = 'auto';
+          return styles;
         case 'left-absolute':
-          return classes + ' absolute pin-l';
+          styles.position = 'absolute';
+          styles.left = '0';
+          return styles;
         case 'right-absolute':
         default:
-          return classes + ' absolute pin-r';
+          styles.position = 'absolute';
+          styles.right = '0';
+          return styles;
       }
     },
   },
