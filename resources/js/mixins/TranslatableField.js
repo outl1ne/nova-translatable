@@ -128,11 +128,6 @@ export default {
       Nova.$emit(this.getAllLocalesEventName(), newLocale);
     },
 
-    removeBottomBorder() {
-      if (!this.isMounted || !this.$refs.main) return false;
-      return this.$refs.main.classList.contains('remove-bottom-border');
-    },
-
     formatValue(value) {
       let formattedValue = value || '';
 

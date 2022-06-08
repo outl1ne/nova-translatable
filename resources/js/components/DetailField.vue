@@ -14,7 +14,6 @@
         v-show="locale.key === activeLocale"
         :is="'detail-' + field.translatable.original_component"
         :field="fields[locale.key]"
-        :class="{ 'remove-bottom-border': removeBottomBorder() }"
         :resource-name="resourceName"
       />
     </div>
@@ -33,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.translatable-field:not(:last-child) {
+.translatable-field {
   .flex.border-t {
     border-style: none !important;
   }
