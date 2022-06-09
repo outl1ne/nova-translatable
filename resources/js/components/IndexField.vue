@@ -2,6 +2,7 @@
   <component
     :is="'index-' + field.translatable.original_component"
     :field="fields[activeLocale]"
+    :translatable-locale="activeLocale"
     :resource-name="resourceName"
   />
 </template>
