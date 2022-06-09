@@ -14,6 +14,7 @@
         v-show="locale.key === activeLocale"
         :is="'detail-' + field.translatable.original_component"
         :field="fields[locale.key]"
+        :translatable-locale="locale.key"
         :resource-name="resourceName"
       />
     </div>

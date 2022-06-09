@@ -17,6 +17,7 @@
         :field="fields[locale.key]"
         :resource-name="resourceName"
         :errors="errors"
+        :translatable-locale="locale.key"
         :show-help-text="showHelpText"
       />
     </div>
