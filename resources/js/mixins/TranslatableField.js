@@ -23,6 +23,7 @@ export default {
         ...this.field,
         extraAttributes: { ...(this.field.extraAttributes || {}) },
         value: initialValues[locale.key] || '',
+        displayedAs: initialValues[locale.key] || '',
         attribute: `${this.field.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
         validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
       })
