@@ -49,8 +49,8 @@ export default {
 
       if (this.field.translatable.prioritize_nova_locale) {
         localeKeys = localeKeys.sort((a, b) => {
-          if (a === Nova.config.locale && b !== Nova.config.locale) return -1;
-          if (a !== Nova.config.locale && b === Nova.config.locale) return 1;
+          if (a === Nova.config('locale') && b !== Nova.config('locale')) return -1;
+          if (a !== Nova.config('locale') && b === Nova.config('locale')) return 1;
           return 0;
         });
       }
