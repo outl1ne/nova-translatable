@@ -7,6 +7,7 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 
 ## Requirements
 
+- `PHP: ^8.0`
 - `laravel/nova: ^4.12`
 - `spatie/laravel-translatable: ^4.0 || ^5.0 || ^6.0`
 
@@ -23,7 +24,7 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 
 - `Image` and `File`
   - Workarounds:
-    - [outl1ne/nova-media-field](https://github.com/outl1ne/nova-media-field)
+    - [outl1ne/nova-media-hub](https://github.com/outl1ne/nova-media-hub)
     - or any library that uploads images/files using XHR
 
 ## Limitations
@@ -31,14 +32,11 @@ This [Laravel Nova](https://nova.laravel.com) allows you to make any input field
 - The following methods can not be used, as this package uses them internally:
   - `resolveUsing`
   - `fillUsing`
-  - `displayUsing` (might be fixed eventually)
 
 ## Screenshots
 
 ![Detail View](./docs/detail.png)
-
 ![Form View](./docs/form.png)
-
 ![Form View w/ Validation Errors](./docs/validation.png)
 
 ## Installation
