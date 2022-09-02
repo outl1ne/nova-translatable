@@ -11,23 +11,7 @@ export default {
   },
 
   beforeMount() {
-    this.originalFieldName = this.field.name;
-    this.activeLocale = this.locales[0].key;
-
-    // Get starting values
-    const initialValues = this.getInitialValues();
-
-    // Create fields
-    this.locales.forEach(locale =>
-      Object.assign(this.fields[locale.key], {
-        ...this.field,
-        extraAttributes: { ...(this.field.extraAttributes || {}) },
-        value: initialValues[locale.key] || '',
-        displayedAs: initialValues[locale.key] || '',
-        attribute: `${this.field.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
-        validationKey: `${this.field.attribute}.${locale.key}`, // Append locale to validationKey
-      })
-    );
+    this.init();
   },
 
   mounted() {
@@ -45,9 +29,9 @@ export default {
 
   computed: {
     locales() {
-      let localeKeys = Object.keys(this.field.translatable.locales);
+      let localeKeys = Object.keys(this.currentField.translatable.locales);
 
-      if (this.field.translatable.prioritize_nova_locale) {
+      if (this.currentField.translatable.prioritize_nova_locale) {
         localeKeys = localeKeys.sort((a, b) => {
           if (a === Nova.config('locale') && b !== Nova.config('locale')) return -1;
           if (a !== Nova.config('locale') && b === Nova.config('locale')) return 1;
@@ -55,11 +39,11 @@ export default {
         });
       }
 
-      return localeKeys.map(key => ({ key, name: this.field.translatable.locales[key] }));
+      return localeKeys.map(key => ({ key, name: this.currentField.translatable.locales[key] }));
     },
 
     fieldValueMustBeAnObject() {
-      return ['key-value-field'].includes(this.field.translatable.original_component);
+      return ['key-value-field'].includes(this.currentField.translatable.original_component);
     },
 
     isFlexible() {
@@ -76,22 +60,52 @@ export default {
     },
 
     isFile() {
-      return ['file-field'].includes(this.field.translatable.original_component);
+      return ['file-field'].includes(this.currentField.translatable.original_component);
+    },
+
+    currentField() {
+      return this.syncedField || this.field;
     },
   },
 
   methods: {
+    init() {
+      this.originalFieldName = this.currentField.name;
+      this.activeLocale = this.locales[0].key;
+
+      // Get starting values
+      const initialValues = this.getInitialValues();
+
+      // Create fields
+      this.locales.forEach(locale =>
+        Object.assign(this.fields[locale.key], {
+          ...this.currentField,
+          extraAttributes: { ...(this.currentField.extraAttributes || {}) },
+          value: initialValues[locale.key] || '',
+          displayedAs: initialValues[locale.key] || '',
+          attribute: `${this.currentField.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
+          validationKey: `${this.currentField.attribute}.${locale.key}`, // Append locale to validationKey
+        })
+      );
+    },
+
+    onSyncedField() {
+      this.init();
+    },
+
     getInitialValues() {
       const initialValue = {};
       for (const locale of this.locales) {
-        const localeValue = (this.field.translatable.value && this.field.translatable.value[locale.key]) || '';
+        const localeValue =
+          (this.currentField.translatable.value && this.currentField.translatable.value[locale.key]) || '';
         initialValue[locale.key] = this.formatValue(localeValue);
       }
       return initialValue;
     },
 
     getInitialFields() {
-      const locales = Object.keys(this.field.translatable.locales);
+      const field = this.currentField || this.field;
+      const locales = Object.keys(field.translatable.locales);
       const fields = {};
       locales.forEach(locale => {
         fields[locale] = {
