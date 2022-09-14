@@ -80,6 +80,7 @@ export default {
       this.locales.forEach(locale =>
         Object.assign(this.fields[locale.key], {
           ...this.currentField,
+          dependsOn: null,
           extraAttributes: { ...(this.currentField.extraAttributes || {}) },
           value: initialValues[locale.key] || '',
           displayedAs: initialValues[locale.key] || '',
