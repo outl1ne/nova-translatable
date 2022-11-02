@@ -2,6 +2,7 @@
   <div class="translatable-field pt-2" ref="main" v-if="currentField.visible">
     <LocaleTabs
       :locales="locales"
+      :attribute="field.attribute"
       :active-locale="activeLocale"
       :display-type="currentField.translatable.display_type"
       :errors="errors"

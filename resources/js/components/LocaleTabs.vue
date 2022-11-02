@@ -8,7 +8,7 @@
       <a
         v-for="locale in locales"
         :key="locale.key"
-        :dusk="errorAttributes[locale.key] + '.locale.tab'"
+        :dusk="getDuskKey(locale.key)"
         class="locale-tag ml-3 cursor-pointer font-bold text-80 text-sm"
         :class="{
           '-active': locale.key === activeLocale,
@@ -25,7 +25,16 @@
 
 <script>
 export default {
-  props: ['locales', 'activeLocale', 'displayType', 'detail', 'errors', 'errorAttributes', 'localesWithErrors'],
+  props: [
+    'attribute',
+    'locales',
+    'activeLocale',
+    'displayType',
+    'detail',
+    'errors',
+    'errorAttributes',
+    'localesWithErrors',
+  ],
   computed: {
     listClasses() {
       if (this.displayType === 'column') return ['flex', 'flex-col'];
@@ -40,6 +49,18 @@ export default {
 
       const errorAttribute = this.errorAttributes[locale];
       return this.errors.has(errorAttribute);
+    },
+
+    getDuskKey(locale) {
+      if (this.attribute) {
+        return `${this.attribute}.${locale}.locale.tab`;
+      }
+
+      if (this.errorAttributes && this.errorAttributes[locale]) {
+        return `${this.errorAttributes[locale]}.locale.tab`;
+      }
+
+      return locale + '.locale.tab';
     },
   },
 };
