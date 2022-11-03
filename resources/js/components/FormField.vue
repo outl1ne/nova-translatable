@@ -79,7 +79,7 @@ export default {
         for (const locale of this.locales) {
           const tempFormData = new FormData();
           const field = this.fields[locale.key];
-          field.fill(tempFormData);
+          if (field.fill) field.fill(tempFormData);
 
           const formDataKeys = Array.from(tempFormData.keys());
           for (const rawKey of formDataKeys) {
