@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.6] - 16-01-2023
+
+### Changed
+
+- `locale_select.display_type` config key has been renamed to `locale_select_display_type`.
+- Fixed issue with usage of dynamic property. Dynamic properties are deprecated in php 8.2
+
 ## [2.1.5] - 11-01-2023
 
 ### Changed
