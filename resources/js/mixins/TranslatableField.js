@@ -75,6 +75,7 @@ export default {
 
       // Get starting values
       const initialValues = this.getInitialValues();
+      const previewFor = this.getInitialPreviewFor();
 
       // Create fields
       this.locales.forEach(locale =>
@@ -83,7 +84,7 @@ export default {
           dependsOn: null,
           extraAttributes: { ...(this.currentField.extraAttributes || {}) },
           value: initialValues[locale.key] || '',
-          previewFor: initialValues[locale.key] || '',
+          previewFor: previewFor[locale.key] || '',
           displayedAs: initialValues[locale.key] || '',
           attribute: `${this.currentField.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
           validationKey: `${this.currentField.attribute}.${locale.key}`, // Append locale to validationKey
@@ -105,6 +106,16 @@ export default {
       return initialValue;
     },
 
+    getInitialPreviewFor() {
+      const initialPreviewFor = {};
+      for (const locale of this.locales) {
+        const initialPreviewFor =
+          (this.currentField.translatable.previewFor && this.currentField.translatable.previewFor[locale.key]) || '';
+          initialPreviewFor[locale.key] = this.formatValue(localeValue);
+      }
+      return initialPreviewFor;
+    },
+
     getInitialFields() {
       const field = this.currentField || this.field;
       const locales = Object.keys(field.translatable.locales);
@@ -112,6 +123,7 @@ export default {
       locales.forEach(locale => {
         fields[locale] = {
           value: '',
+          previewFor: '',
           readonly: '',
           extraAttributes: {},
           attribute: '',

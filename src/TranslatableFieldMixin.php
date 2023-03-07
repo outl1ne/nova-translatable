@@ -3,6 +3,8 @@
 namespace Outl1ne\NovaTranslatable;
 
 use Exception;
+use Illuminate\Support\Arr;
+use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -71,15 +73,21 @@ class TranslatableFieldMixin
                     ? $options['fillOtherLocalesFrom']
                     : config('nova-translatable.fill_other_locales_from', null);
 
+                $translatable = [
+                    'original_attribute' => $this->attribute,
+                    'original_component' => $component,
+                    'locales' => $locales,
+                    'value' => $value ?: $defaultValue,
+                    'prioritize_nova_locale' => $prioritizeNovaLocale,
+                    'display_type' => $displayType,
+                ];
+
+                if ($this instanceof Markdown) {
+                    $translatable['previewFor'] = $translatable['value'] ? Arr::map($translatable['value'], fn($value) => $this->previewFor($value)) : [];
+                }
+
                 $this->withMeta([
-                    'translatable' => [
-                        'original_attribute' => $this->attribute,
-                        'original_component' => $component,
-                        'locales' => $locales,
-                        'value' => $value ?: $defaultValue,
-                        'prioritize_nova_locale' => $prioritizeNovaLocale,
-                        'display_type' => $displayType,
-                    ],
+                    'translatable' => $translatable,
                 ]);
 
                 $this->component = 'translatable-field';
