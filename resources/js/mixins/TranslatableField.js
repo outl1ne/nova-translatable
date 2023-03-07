@@ -109,9 +109,9 @@ export default {
     getInitialPreviewFor() {
       const initialPreviewFor = {};
       for (const locale of this.locales) {
-        const initialPreviewFor =
+        const localePreviewFor =
           (this.currentField.translatable.previewFor && this.currentField.translatable.previewFor[locale.key]) || '';
-          initialPreviewFor[locale.key] = this.formatValue(localeValue);
+          initialPreviewFor[locale.key] = this.formatValue(localePreviewFor);
       }
       return initialPreviewFor;
     },
