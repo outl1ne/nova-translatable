@@ -93,7 +93,9 @@ export default {
                 data[locale.key] = value;
               }
             } else {
-              formData.append(key, value);
+              // Fix for when the field is coming from a relationship
+              let realFormData = formData.formData || formData;
+              realFormData.append(key, value);
             }
           }
         }
