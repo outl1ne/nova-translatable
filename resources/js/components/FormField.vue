@@ -110,7 +110,7 @@ export default {
       const locales = this.locales;
       const errorAttributes = {};
       for (const locale of locales) {
-        errorAttributes[locale.key] = `${this.currentField.attribute}.${locale.key}`;
+        errorAttributes[locale.key] = `${this.currentField.validationKey}.${locale.key}`;
       }
       return errorAttributes;
     },

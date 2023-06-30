@@ -85,7 +85,7 @@ export default {
           value: initialValues[locale.key] || '',
           displayedAs: initialValues[locale.key] || '',
           attribute: `${this.currentField.attribute}.${locale.key}`, // Append '.en' to avoid duplicate ID-s in DOM
-          validationKey: `${this.currentField.attribute}.${locale.key}`, // Append locale to validationKey
+          validationKey: `${this.currentField.validationKey}.${locale.key}`, // Append locale to validationKey
         })
       );
     },
