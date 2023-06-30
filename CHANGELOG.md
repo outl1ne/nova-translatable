@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 30-07-2023
+
+### Changed
+
+- Use validation key instead of attribute when dealing with validation (thanks to [@RobertoNegro](https://github.com/RobertoNegro))
+- Fixed numeric value saving when the number starts with + (thanks to [@RobertoNegro](https://github.com/RobertoNegro))
+- Fixed Markdown fields preview displaying (thanks to [@lonnylot](https://github.com/lonnylot))
+- Fixed saving the form via the inline form (thanks to [@jaap](https://github.com/jaap))
+- Updated packages
+
 ## [2.1.6] - 16-01-2023
 
 ### Changed
