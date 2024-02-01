@@ -77,7 +77,7 @@ class TranslatableFieldMixin
 
                 if($this instanceof Text && !$this instanceof Number) {
                     foreach ($value as $key => $val) {
-                        $value[$key] = ( $val === null ? null : (string) $val) ;
+                        $value[$key] = ( $val === null ? null : (string) $val );
                     }
                 }
 
