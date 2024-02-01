@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class TranslatableFieldMixin
@@ -74,7 +75,7 @@ class TranslatableFieldMixin
                     ? $options['fillOtherLocalesFrom']
                     : config('nova-translatable.fill_other_locales_from', null);
 
-                if($this instanceof Text) {
+                if($this instanceof Text && !$this instanceof Number) {
                     foreach ($value as $key => $val) {
                         $value[$key] = ( $val === null ? null : (string) $val) ;
                     }
