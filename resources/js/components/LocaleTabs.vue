@@ -1,10 +1,10 @@
 <template>
   <div
     v-show="locales.length > 1"
-    class="nova-translatable-locale-tabs flex select-none"
+    class="nova-translatable-locale-tabs flex select-none md:w-3/4 whitespace-nowrap overflow-x-auto ml-auto"
     :class="{ 'px-8': !this.detail }"
   >
-    <div class="ml-auto" :class="listClasses" v-if="displayType != 'none'">
+    <div class="ml-auto py-1.5" :class="listClasses" v-if="displayType != 'none'">
       <a
         v-for="locale in locales"
         :key="locale.key"
@@ -71,6 +71,15 @@ export default {
   position: relative;
   z-index: 2;
   padding-top: 0.25rem;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #C1C1C1;
+    border-radius: 5px;
+  }
 
   .locale-tag {
     border-bottom: 2px solid transparent;
