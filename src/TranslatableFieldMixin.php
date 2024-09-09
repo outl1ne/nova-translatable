@@ -83,7 +83,7 @@ class TranslatableFieldMixin
                 ];
 
                 if ($this instanceof Markdown) {
-                    $translatable['previewFor'] = $translatable['value'] ? Arr::map($translatable['value'], fn ($value) => $this->previewFor($value)) : [];
+                    $translatable['previewFor'] = $translatable['value'] ? Arr::map($translatable['value'], fn($value) => $this->previewFor($value)) : [];
                 }
 
                 $this->withMeta(['translatable' => $translatable]);
@@ -149,10 +149,6 @@ class TranslatableFieldMixin
     {
         return function ($locales, $rules) {
             $setRule = function ($locale, $rules) {
-                if (!in_array($locale, array_keys(FieldServiceProvider::getLocales()))) {
-                    throw new Exception("Invalid locale specified ({$locale})");
-                }
-
                 if (!is_array($rules)) $rules = [$rules];
 
                 $this->rules['translatable'][$locale] = $rules;
