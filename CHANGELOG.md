@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 09-09-2024
+
+### Changed
+
+- Remove legacy top border on detail view (thanks to [@Nembie](https://github.com/Nembie))
+- Make overflowing locales scroll horizontally (thanks to [@Gertiozuni](https://github.com/Gertiozuni))
+- Fix z-index overlapping on some modals (thanks to [@royduin](https://github.com/royduin))
+- Fix 0 unnecessarily casted into float (thanks to [@robertmarney](https://github.com/robertmarney))
+- Fix field reading 'cookie' header instead of input (thanks to [@FinnPaes](https://github.com/FinnPaes))
+- Updated packages
+
 ## [2.2.0] - 30-07-2023
 
 ### Changed
