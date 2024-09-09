@@ -69,7 +69,6 @@ export default {
 <style lang="scss">
 .nova-translatable-locale-tabs {
   position: relative;
-  z-index: 2;
   padding-top: 0.25rem;
 
   &::-webkit-scrollbar {
