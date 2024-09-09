@@ -75,9 +75,10 @@ class TranslatableFieldMixin
                     ? $options['fillOtherLocalesFrom']
                     : config('nova-translatable.fill_other_locales_from', null);
 
-                if($this instanceof Text && !$this instanceof Number) {
+                // Fix strings being casted to floats
+                if ($this instanceof Text && !$this instanceof Number) {
                     foreach ($value as $key => $val) {
-                        $value[$key] = ( $val === null ? null : (string) $val );
+                        $value[$key] = ($val === null ? null : (string) $val);
                     }
                 }
 
