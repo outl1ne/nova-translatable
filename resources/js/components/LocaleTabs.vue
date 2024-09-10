@@ -16,9 +16,8 @@
         }"
         @click="() => $emit('tabClick', locale.key)"
         @dblclick="() => $emit('doubleClick', locale.key)"
-      >
-        {{ locale.name }}
-      </a>
+        v-html="getLocaleDisplay(locale)"
+      />
     </div>
   </div>
 </template>
@@ -61,6 +60,16 @@ export default {
       }
 
       return locale + '.locale.tab';
+    },
+
+    getLocaleDisplay(locale) {
+      const customDisplay = Nova.config('customLocaleDisplay');
+
+      if (customDisplay && customDisplay[locale.key]) {
+        return customDisplay[locale.key];
+      }
+
+      return locale.name;
     },
   },
 };
