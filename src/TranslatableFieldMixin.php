@@ -3,6 +3,7 @@
 namespace Outl1ne\NovaTranslatable;
 
 use Exception;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Arr;
 use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Textarea;
@@ -44,7 +45,11 @@ class TranslatableFieldMixin
                 try {
                     if (!is_array($value)) {
                         if (is_object($value)) {
-                            $value = (array) $value;
+                            if($value instanceof Arrayable) {
+                                $value = $value->toArray();
+                            } else {
+                                $value = (array) $value;
+                            }
                         } else {
                             $testValue = json_decode($value, true);
                             if (is_array($testValue)) $value = $testValue;
