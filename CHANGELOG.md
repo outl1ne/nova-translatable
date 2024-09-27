@@ -5,12 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 27-09-2024
+
+### Changed
+
+- Use Arrayable interface when casting to array (thanks to [@jan-tricks](https://github.com/jan-tricks))
+- Allow customizing the display of locales (thanks to [@Gertiozuni](https://github.com/Gertiozuni))
+- Update packages
+
 ## [2.3.1] - 12-09-2024
 
 ### Changed
 
 - Fix cast issue when trying to foreach loop empty value. (thanks to [@RomkaLTU](https://github.com/RomkaLTU))
-
 
 ## [2.3.0] - 09-09-2024
 
