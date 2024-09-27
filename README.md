@@ -133,6 +133,27 @@ The configuration option `fill_other_locales_from` allows you to pre-fill other 
 
 If you don't want to display the locale select next to each field, you can set the `display_type` to `none` and add a `Outl1ne\NovaTranslatable\Fields\LocaleSelect` field to your Nova resource. This will render a single select for all fields.
 
+### Custom locale display
+
+To customize the locale display you can use `Nova::provideToScript` to pass `customLocaleDisplay` as in the example below.
+
+```php
+// in app/Providers/NovaServiceProvider.php
+
+public function boot()
+{
+    Nova::serving(function () {
+        Nova::provideToScript([
+            // ...
+            'customLocaleDisplay' => [
+                'en' => <img src="/flag-en.png"/>,
+                'et' => <img src="/flag-et.png"/>,
+            ]
+        ]);
+    });
+}
+```
+
 ## Edge cases
 
 #### BelongsToMany allowDuplicateRelations corner-case
