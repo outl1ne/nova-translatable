@@ -16,7 +16,7 @@ trait HandlesTranslatable
      *
      * @return array
      */
-    protected static function formatRules(NovaRequest $request, array $rules)
+    protected static function formatRules(NovaRequest $request, array $rules): array
     {
         $rules = parent::formatRules($request, $rules);
 
