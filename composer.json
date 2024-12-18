@@ -24,8 +24,12 @@
   "require": {
     "php": ">=8.1",
     "laravel/nova": "^4.12|^5.0",
-    "nova-kit/nova-packages-tool": "^1.0",
-    "spatie/laravel-translatable": "^4.0 || ^5.0 || ^6.0"
+    "spatie/laravel-translatable": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+  },
+  "require-dev": {
+    "laravel/nova-devtool": "^1.0",
+    "nunomaduro/collision": "^7.8",
+    "orchestra/testbench": "^8.30|^9.8"
   },
   "autoload": {
     "psr-4": {
