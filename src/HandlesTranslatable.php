@@ -71,7 +71,7 @@ trait HandlesTranslatable
         })->all();
     }
 
-    public static function validatorForCreation(NovaRequest $request)
+    public static function validatorForCreation(NovaRequest $request): \Illuminate\Contracts\Validation\Validator
     {
         // Get rules before $request->all() call
         $rules = static::rulesForCreation($request);
@@ -82,7 +82,7 @@ trait HandlesTranslatable
             });
     }
 
-    public static function validatorForUpdate(NovaRequest $request, $resource = null)
+    public static function validatorForUpdate(NovaRequest $request, $resource = null): \Illuminate\Contracts\Validation\Validator
     {
         // Get rules before $request->all() call
         $rules = static::rulesForUpdate($request, $resource);
