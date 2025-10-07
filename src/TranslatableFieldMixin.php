@@ -45,7 +45,7 @@ class TranslatableFieldMixin
                 try {
                     if (!is_array($value)) {
                         if (is_object($value)) {
-                            if($value instanceof Arrayable) {
+                            if ($value instanceof Arrayable) {
                                 $value = $value->toArray();
                             } else {
                                 $value = (array) $value;
@@ -126,20 +126,29 @@ class TranslatableFieldMixin
             $this->displayUsing(function ($value, $resource, $attribute) use ($originalDisplayCallback) {
                 $this->displayCallback = $originalDisplayCallback;
 
-                /**
-                 * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e()
-                 * and it only accepts string, passing an array will cause a crash
-                 */
                 if ($this instanceof Textarea) {
+                    /**
+                     * Avoid calling resolveForDisplay on the main Textarea instance as it contains a call to e()
+                     * and it only accepts string, passing an array will cause a crash
+                     */
                     $this->displayCallback = null;
                     parent::resolveForDisplay($resource, $attribute);
+                } else {
+                    $this->resolveForDisplay($resource, $attribute);
 
-                    if (is_string($value)) return $value;
-                    return collect(array_values((array) ($value ?? [])))->filter()->first() ?? '';
+                    if (is_callable($originalDisplayCallback)) {
+                        // had custom display callback
+                        $value = $this->displayedAs;
+                    }
                 }
 
-                $this->resolveForDisplay($resource, $attribute);
-                return $value;
+                if (is_array($value)) {
+                    if (empty($value)) return null;
+                    $locale = app()->getLocale();
+                    $value = $value[$locale] ?? $value[array_key_first($value)] ?? null;
+                }
+
+                return is_null($value) ? null : (string) $value;
             });
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) use ($locales) {
