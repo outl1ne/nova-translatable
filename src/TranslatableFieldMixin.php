@@ -156,6 +156,21 @@ class TranslatableFieldMixin
                 $value = $request->input($realAttribute);
                 $translations = is_string($value) ? json_decode($value, true) : $value;
 
+                // Handling slugs for translatable fields
+                if ($this instanceof \Laravel\Nova\Fields\Slug && !empty($this->from)) {
+                    $fromAttribute = is_object($this->from) && isset($this->from->attribute) ? $this->from->attribute : $this->from;
+                    $sourceTranslations = $request->input($fromAttribute);
+
+                    if (is_array($sourceTranslations) && is_array($translations)) {
+                        // Auto-generating slugs for empty locales
+                        foreach ($locales as $localeKey => $localeName) {
+                            if (empty($translations[$localeKey]) && !empty($sourceTranslations[$localeKey])) {
+                                $translations[$localeKey] = \Illuminate\Support\Str::slug($sourceTranslations[$localeKey], $this->separator ?? '-');
+                            }
+                        }
+                    }
+                }
+
                 $isTranslatableAttribute = method_exists($model, 'isTranslatableAttribute') && $model->isTranslatableAttribute($realAttribute);
                 if ($isTranslatableAttribute && is_array($translations)) {
                     $model->setTranslations($realAttribute, $translations);
