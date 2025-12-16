@@ -29,6 +29,14 @@ class FieldServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/nova-translatable.php', 'nova-translatable');
     }
 
+    public function boot()
+    {
+        // Add middleware
+        $this->app->booted(function () {
+            $this->app->router->pushMiddlewareToGroup('nova:api', \Outl1ne\NovaTranslatable\Http\Middleware\NormalizeNovaTranslatablePreviewFieldNamesMiddleware::class);
+        });
+    }
+
     protected static function isValidLocaleArray($localeArray)
     {
         return (!empty($localeArray) && is_array($localeArray) && Arr::isAssoc($localeArray));
