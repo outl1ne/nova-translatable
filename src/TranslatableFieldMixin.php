@@ -153,7 +153,8 @@ class TranslatableFieldMixin
 
             $this->fillUsing(function ($request, $model, $attribute, $requestAttribute) use ($locales) {
                 $realAttribute = FieldServiceProvider::normalizeAttribute($this->meta['translatable']['original_attribute'] ?? $attribute);
-                $value = $request->input($realAttribute);
+                $realRequestAttribute = FieldServiceProvider::normalizeAttribute($this->meta['translatable']['original_attribute'] ?? $requestAttribute);
+                $value = $request->input($realRequestAttribute);
                 $translations = is_string($value) ? json_decode($value, true) : $value;
 
                 $isTranslatableAttribute = method_exists($model, 'isTranslatableAttribute') && $model->isTranslatableAttribute($realAttribute);
