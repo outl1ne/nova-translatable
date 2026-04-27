@@ -59,6 +59,10 @@ export default {
       );
     },
 
+    isRepeater() {
+      return this.nested && this.$parent && this.$parent.field && this.$parent.field.component === 'repeater-field';
+    },
+
     isFile() {
       return ['file-field'].includes(this.currentField.translatable.original_component);
     },
